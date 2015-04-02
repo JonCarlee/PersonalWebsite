@@ -198,6 +198,7 @@
     <Content Include="img\general-3.jpg" />
     <Content Include="img\general-4.jpg" />
     <Content Include="img\imac.png" />
+    <Content Include="img\max.png" />
     <Content Include="img\slide-1.jpg" />
     <Content Include="img\slide-1.png" />
     <Content Include="img\loading.gif" />
@@ -318,6 +319,7 @@
     <Content Include="Views\Home\Portfolio.cshtml" />
     <Content Include="Views\Home\JSExercises.cshtml" />
     <Content Include="Views\Home\BugTracker.cshtml" />
+    <Content Include="Views\Home\Resume.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
