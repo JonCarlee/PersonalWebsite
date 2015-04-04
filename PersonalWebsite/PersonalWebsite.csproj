@@ -213,6 +213,7 @@
     <Content Include="img\old-slide-1.jpg" />
     <Content Include="img\slide-2.jpg" />
     <Content Include="img\slide-3.jpg" />
+    <Content Include="img\sum.png" />
     <Content Include="img\thumbnail-1.jpg" />
     <Content Include="img\thumbnail-2.jpg" />
     <Content Include="img\thumbnail-3.jpg" />
@@ -232,7 +233,6 @@
     <Content Include="js\jquery.plugin.min.js" />
     <Content Include="js\jquery.sticky.js" />
     <Content Include="js\lightbox-2.6.min.js" />
-    <Content Include="js\myjavascript.js" />
     <Content Include="js\scrolltopcontrol.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
