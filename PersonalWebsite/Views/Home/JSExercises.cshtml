@@ -74,6 +74,135 @@
                 document.getElementById("factTotal").innerHTML = "RESULT: " + total;
             }
         }
+        function checkPalindrome() {
+            var input = document.getElementById("pal").value;
+            input = input.toLowerCase();
+            if (input == "") {
+                document.getElementById('isPalindrome').innerHTML = "RESULT: Please type in a word.";
+            } else {
+                var flipText = "";
+                for (i = input.length - 1; i > -1; i--) {
+                    flipText += input.charAt(i);
+                }
+                if (input == flipText) {
+                    document.getElementById('isPalindrome').innerHTML = "RESULT: The word  [" + input + "]  is a palindrome!";
+                } else {
+                    document.getElementById('isPalindrome').innerHTML = "RESULT: The word  [" + input + "]  is NOT a palindrome...";
+                }
+            }
+        }
+        function fizzBuzz() {
+            var text = "";
+            for (i = 1; i < 101; i++) {
+                if (i % 3 == 0) {
+                    if (i % 5 == 0) {
+                        text += "FizzBuzz" + "<br>";
+                    } else {
+                        text += "Fizz" + "<br>";
+                    }
+                } else if (i % 5 == 0) {
+                    text += "Buzz" + "<br>";
+                } else {
+                    text += i + "<br>";
+                }
+            }
+            document.getElementById('fizzedBuzzed').innerHTML = "RESULT: " + text;
+        }
+        function isPerfectNumber() {
+            var sum = 0;
+            var num = document.getElementById("aPerfect").value;
+            if (num < 1 || num == "") {
+                document.getElementById('isItPerfect').innerHTML = "RESULT: " + "Please enter a positive integer.";
+            }
+            else {
+                for (i = 1; i < num; i++) {
+                    if (num % i == 0) {
+                        sum += i;
+                    }
+                }
+                if (sum == num) {
+                    document.getElementById('isItPerfect').innerHTML = "RESULT: " + num + " is a Perfect Number.";
+                } else {
+                    document.getElementById('isItPerfect').innerHTML = "RESULT: " + num + " is NOT a Perfect Number.";
+                }
+            }
+        }
+        function findPerfectNum() {
+            var output = "";
+            for (i = 1; i < 10001; i++) {
+                sum = 0;
+                for (j = 1; j < i; j++) {
+                    if (i % j == 0) {
+                        sum += j;
+                    }
+                }
+                if (sum == i) {
+                    output += i.toString() + " ";
+                }
+            }
+            document.getElementById('foundPerfect').innerHTML = "RESULT: " + output;
+        }
+        function happyNumbers() {
+            var repeat = false;
+            var count = 0;
+            var output = "";
+            var intCount = 0;
+            for (i = 1; i > 0; i++) {
+                intCount = 0;
+                repeat = false;
+                sum = i;
+                newSum = 0;
+                happyArray = [];
+                while (repeat != true && sum != 1) {
+                    if (sum / 100 >= 1) {
+                        newSum = Math.pow(Math.floor(sum / 100), 2);
+                    }
+                    if (sum / 10 >= 1) {
+                        newSum += Math.pow(Math.floor(sum / 10) % 10, 2);
+                    }
+                    newSum += Math.pow(sum % 10, 2);
+                    sum = newSum;
+                    newSum = 0;
+                    intCount++;
+                    for (j = 0; j < intCount; j++) {
+                        if (happyArray[j] == sum) {
+                            repeat = true;
+                        } else if (happyArray[j] == null) {
+                            happyArray[j] = sum;
+                        }
+                    }
+                }
+                if (sum == 1) {
+                    output += i.toString() + " ";
+                    count++;
+                    if (count == 5) {
+                        i = -10;
+                    }
+                }
+            }
+            document.getElementById('firstFive').innerHTML = "RESULT: " + output;
+        }
+        function findArmstrong() {
+            var output = "";
+            for (i = 100; i < 1000; i++) {
+                sum = Math.pow(i % 10, 3) + Math.pow(Math.floor(i / 100), 3) + Math.pow(Math.floor(i / 10) % 10, 3);
+                if (sum == i) {
+                    output += i.toString() + " ";
+                }
+            }
+            document.getElementById('foundArmstrong').innerHTML = "RESULT: " + output;
+        }
+        function findLongest(arrayText) {
+            var longest = "";
+            var output = "";
+            for (i = 0; i < arrayText.length; i++) {
+                if (i == 0 || arrayText[i].length > longest.length) {
+                    longest = arrayText[i];
+                }
+            }
+            output = "The longest word in the file is: " + longest;
+            document.querySelector('foundLongest').innerHTML = "RESULT: " + output;
+        }
     </script>
 </head>
 <body>
@@ -401,24 +530,22 @@ function findProduct() {
                     <div class="col-sm-1"></div>
                     <div class="col-sm-10">
                         <pre class="brush: js text">
-function findProduct() {
-    var output = 0;
-    var num1 = document.getElementById("multi1").value;
-    num1 = Number(num1);
-    var num2 = document.getElementById("multi2").value;
-    num2 = Number(num2);
-    var num3 = document.getElementById("multi3").value;
-    num3 = Number(num3);
-    var num4 = document.getElementById("multi4").value;
-    num4 = Number(num4);
-    var num5 = document.getElementById("multi5").value;
-    num5 = Number(num5);
-    if (num1 * num2 * num3 * num4 * num5 == "") {
-        document.getElementById("product").innerHTML = "RESULT: Please fill out all of the number spaces.";
+function findFactorial() {
+    var num = document.getElementById("fact").value;
+    num = Math.floor(num);
+    var total = 0;
+    if (num < 1 || num == "") {
+        document.getElementById("factTotal").innerHTML = "RESULT: Please enter a positive integer.";
+    }
+    else if (num == 1) {
+        document.getElementById("factTotal").innerHTML = "RESULT: 1";
     }
     else {
-        output = num1 * num2 * num3 * num4 * num5;
-        document.getElementById("product").innerHTML = "RESULT: " + output;
+        total = num
+        for (i = num - 1; i > 1; i--) {
+            total = total * i;
+        }
+        document.getElementById("factTotal").innerHTML = "RESULT: " + total;
     }
 }
                 </pre>
@@ -449,15 +576,15 @@ function findProduct() {
                 <div class="modal-body col-sm-12">
                     <div class="row"></div>
                     <div class="col-sm-1"></div>
-                    <p>This will find the factorial of the numerical input from the user.  If the user inputs a non-integer value, the function willautomatically round down the number to the nearest integer. (e.g. 3.473284 would become 3)</p>
+                    <p>This will take a string input from the user and decide whether or not it's a palindrome (or a word that is spelled the same forwards and backwards).</p>
                     <div class="row">
                         <div class="col-sm-1"></div>
-                        <p>Enter a positive integer:</p>
+                        <p>Enter a string:</p>
                         <form>
                             <div class="row">
                                 <div class="col-sm-4"></div>
                                 <div class="col-sm-4">
-                                    <input type="number" id="fact" class="form-control" />
+                                    <input type="text" id="pal" class="form-control" />
                                 </div>
                                 <div class="col-sm-4"></div>
                             </div>
@@ -465,13 +592,13 @@ function findProduct() {
                             <div class="row">
                                 <div class="col-sm-5"></div>
                                 <div class="col-sm-5">
-                                    <button type="button" class="btn btn-primary" onclick="findFactorial()">Try it out!</button>
+                                    <button type="button" class="btn btn-primary" onclick="checkPalindrome()">Try it out!</button>
                                 </div>
                             </div>
                             <br />
                             <div class="row">
                                 <div class="col-sm-2"></div>
-                                <div id="factTotal">RESULT: </div>
+                                <div id="isPalindrome">RESULT: </div>
                             </div>
                         </form>
                     </div>
@@ -484,24 +611,21 @@ function findProduct() {
                     <div class="col-sm-1"></div>
                     <div class="col-sm-10">
                         <pre class="brush: js text">
-function findProduct() {
-    var output = 0;
-    var num1 = document.getElementById("multi1").value;
-    num1 = Number(num1);
-    var num2 = document.getElementById("multi2").value;
-    num2 = Number(num2);
-    var num3 = document.getElementById("multi3").value;
-    num3 = Number(num3);
-    var num4 = document.getElementById("multi4").value;
-    num4 = Number(num4);
-    var num5 = document.getElementById("multi5").value;
-    num5 = Number(num5);
-    if (num1 * num2 * num3 * num4 * num5 == "") {
-        document.getElementById("product").innerHTML = "RESULT: Please fill out all of the number spaces.";
-    }
-    else {
-        output = num1 * num2 * num3 * num4 * num5;
-        document.getElementById("product").innerHTML = "RESULT: " + output;
+function checkPalindrome() {
+    var input = document.getElementById("pal").value;
+    input = input.toLowerCase();
+    if (input == "") {
+        document.getElementById('isPalindrome').innerHTML = "RESULT: Please type in a word.";
+    } else {
+        var flipText = "";
+        for (i = input.length - 1; i > -1; i--) {
+            flipText += input.charAt(i);
+        }
+        if (input == flipText) {
+            document.getElementById('isPalindrome').innerHTML = "RESULT: The word  [" + input + "]  is a palindrome!";
+        } else {
+            document.getElementById('isPalindrome').innerHTML = "RESULT: The word  [" + input + "]  is NOT a palindrome...";
+        }
     }
 }
                 </pre>
@@ -514,6 +638,512 @@ function findProduct() {
         </div>
     </div>
 
-           </body>
+    <a href="" data-toggle="modal" data-target="#fizzbuzz">
+        <img src="~/img/sum.png" />
+    </a>
+
+    <div class="modal fade" id="fizzbuzz" tabindex="-1" role="dialog"
+         aria-labelledby="max" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header body-blue">
+                    <button type="button" class=" close" data-dismiss="modal"
+                            aria-hidden="true">
+                        x
+                    </button>
+                    <h1 class="modal-title" id="max">FizzBuzz!</h1>
+                </div>
+                <div class="modal-body col-sm-12">
+                    <div class="row"></div>
+                    <div class="col-sm-1"></div>
+                    <p>This will read each number from 1 to 100 and check to see if it's divisible by both 3 and 5.  If it's divisible by 3 or 5, the number is replaced by Fizz and Buzz, respectively.  If it's divisible by both, the number is replaced by fizzbuzz.  If none apply, the number is displayed normally.</p>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <p></p>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-5">
+                                    <button type="button" class="btn btn-primary" onclick="fizzBuzz()">Try it out!</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div id="fizzedBuzzed" style="text-align: center">RESULT: </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <pre class="brush: js text">
+function fizzBuzz() {
+    var text = "";
+    for (i = 1; i < 101; i++) {
+        if (i % 3 == 0) {
+            if (i % 5 == 0) {
+                text += "FizzBuzz" + "<br>";
+            } else {
+                text += "Fizz" + "<br>";
+            }
+        } else if (i % 5 == 0) {
+            text += "Buzz" + "<br>";
+        } else {
+            text += i + "<br>";
+        }
+    }
+    document.getElementById('fizzedBuzzed').innerHTML = "RESULT: " + text;
+}
+                </pre>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                <div class="modal-footer no-margin">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="" data-toggle="modal" data-target="#isPerfect">
+        <img src="~/img/sum.png" />
+    </a>
+
+    <div class="modal fade" id="isPerfect" tabindex="-1" role="dialog"
+         aria-labelledby="max" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header body-blue">
+                    <button type="button" class=" close" data-dismiss="modal"
+                            aria-hidden="true">
+                        x
+                    </button>
+                    <h1 class="modal-title" id="max">Is This Number A Perfect Number?</h1>
+                </div>
+                <div class="modal-body col-sm-12">
+                    <div class="row"></div>
+                    <div class="col-sm-1"></div>
+                    <p>This will check to see if the user's input number is a perfect number, or if the number is the sum of it's divisors excluding itself.  (e.g. 6 is a perfect number since 1, 2, and 3 can be divisors of 6 and 1 + 2 + 3 = 6)</p>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <p>Enter a positive integer:</p>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                    <input type="number" id="aPerfect" class="form-control" />
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-5">
+                                    <button type="button" class="btn btn-primary" onclick="isPerfectNumber()">Try it out!</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div id="isItPerfect">RESULT: </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <pre class="brush: js text">
+function isPerfectNumber() {
+    var sum = 0;
+    var num = document.getElementById("aPerfect").value;
+    if (num < 1 || num == "") {
+        document.getElementById('isItPerfect').innerHTML = "RESULT: " + "Please enter a positive integer.";
+    }
+    else {
+        for (i = 1; i < num; i++) {
+            if (num % i == 0) {
+                sum += i;
+            }
+        }
+        if (sum == num) {
+            document.getElementById('isItPerfect').innerHTML = "RESULT: " + num + " is a Perfect Number.";
+        } else {
+            document.getElementById('isItPerfect').innerHTML = "RESULT: " + num + " is NOT a Perfect Number.";
+        }
+    }
+}
+                </pre>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                <div class="modal-footer no-margin">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="" data-toggle="modal" data-target="#findPerfect">
+        <img src="~/img/sum.png" />
+    </a>
+
+    <div class="modal fade" id="findPerfect" tabindex="-1" role="dialog"
+         aria-labelledby="max" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header body-blue">
+                    <button type="button" class=" close" data-dismiss="modal"
+                            aria-hidden="true">
+                        x
+                    </button>
+                    <h1 class="modal-title" id="max">Find The Perfect Numbers</h1>
+                </div>
+                <div class="modal-body col-sm-12">
+                    <div class="row"></div>
+                    <div class="col-sm-1"></div>
+                    <p>This will read each number from 1 to 10000 and check to see if it's a perfect number, or if the number is the sum of it's divisors excluding itself.  (e.g. 6 is a perfect number since 1, 2, and 3 can be divisors of 6 and 1 + 2 + 3 = 6).  If it's a perfect number, it displays that number. </p>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <p></p>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-5">
+                                    <button type="button" class="btn btn-primary" onclick="findPerfectNum()">Try it out!</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div id="foundPerfect">RESULT: </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <pre class="brush: js text">
+function findPerfectNum() {
+    var output = "";
+    for (i = 1; i < 10001; i++) {
+        sum = 0;
+        for (j = 1; j < i; j++) {
+            if (i % j == 0) {
+                sum += j;
+            }
+        }
+        if (sum == i) {
+            output += i.toString() + " ";
+        }
+    }
+    document.getElementById('foundPerfect').innerHTML = "RESULT: " + output;
+}
+                </pre>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                <div class="modal-footer no-margin">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="" data-toggle="modal" data-target="#fiveHappy">
+        <img src="~/img/sum.png" />
+    </a>
+
+    <div class="modal fade" id="fiveHappy" tabindex="-1" role="dialog"
+         aria-labelledby="max" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header body-blue">
+                    <button type="button" class=" close" data-dismiss="modal"
+                            aria-hidden="true">
+                        x
+                    </button>
+                    <h1 class="modal-title" id="max">Find The First Five Happy Numbers</h1>
+                </div>
+                <div class="modal-body col-sm-12">
+                    <div class="row"></div>
+                    <div class="col-sm-1"></div>
+                    <p>This will read each number from 1 to infinity until it finds the first five happy numbers, or a number where the square of it's digits eventually equals 1 (e.g. 10 is a happy number since 1^2 = 1, 0^2 = 0 and 1 + 0 = 1). </p>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <p></p>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-5">
+                                    <button type="button" class="btn btn-primary" onclick="happyNumbers()">Try it out!</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div id="firstFive">RESULT: </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <pre class="brush: js text">
+function happyNumbers() {
+    var repeat = false;
+    var count = 0;
+    var output = "";
+    var intCount = 0;
+    for (i = 1; i > 0; i++) {
+        intCount = 0;
+        repeat = false;
+        sum = i;
+        newSum = 0;
+        happyArray = [];
+        while (repeat != true && sum != 1) {
+            if (sum / 100 >= 1) {
+                newSum = Math.pow(Math.floor(sum / 100), 2);
+            }
+            if (sum / 10 >= 1) {
+                newSum += Math.pow(Math.floor(sum / 10) % 10, 2);
+            }
+            newSum += Math.pow(sum % 10, 2);
+            sum = newSum;
+            newSum = 0;
+            intCount++;
+            for (j = 0; j < intCount; j++) {
+                if (happyArray[j] == sum) {
+                    repeat = true;
+                } else if (happyArray[j] == null) {
+                    happyArray[j] = sum;
+                }
+            }
+        }
+        if (sum == 1) {
+            output += i.toString() + " ";
+            count++;
+            if (count == 5) {
+                i = -10;
+            }
+        }
+    }
+    document.getElementById('firstFive').innerHTML = "RESULT: " + output;
+}
+                </pre>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                <div class="modal-footer no-margin">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <a href="" data-toggle="modal" data-target="#armstrong">
+        <img src="~/img/sum.png" />
+    </a>
+
+    <div class="modal fade" id="armstrong" tabindex="-1" role="dialog"
+         aria-labelledby="max" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header body-blue">
+                    <button type="button" class=" close" data-dismiss="modal"
+                            aria-hidden="true">
+                        x
+                    </button>
+                    <h1 class="modal-title" id="max">Find The Armstrong Numbers</h1>
+                </div>
+                <div class="modal-body col-sm-12">
+                    <div class="row"></div>
+                    <div class="col-sm-1"></div>
+                    <p>This will read each three digit number number from 100 to 999 and displaying the armstrong numbers, or a number where the cubes of it's digits equals 1 (e.g. 153 is an armstrong number since 1^3 = 1, 5^3 = 125, 3^3 = 27 and 1 + 125 + 27 = 153). </p>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <p></p>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-5">
+                                    <button type="button" class="btn btn-primary" onclick="findArmstrong()">Try it out!</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div id="foundArmstrong">RESULT: </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <pre class="brush: js text">
+function findArmstrong() {
+    var output = "";
+    for (i = 100; i < 1000; i++) {
+        sum = Math.pow(i % 10, 3) + Math.pow(Math.floor(i / 100), 3) + Math.pow(Math.floor(i / 10) % 10, 3);
+        if (sum == i) {
+            output += i.toString() + " ";
+        }
+    }
+    document.getElementById('foundArmstrong').innerHTML = "RESULT: " + output;
+}
+                </pre>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                <div class="modal-footer no-margin">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="" data-toggle="modal" data-target="#longestWord">
+        <img src="~/img/sum.png" />
+    </a>
+
+    <div class="modal fade" id="longestWord" tabindex="-1" role="dialog"
+         aria-labelledby="max" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header body-blue">
+                    <button type="button" class=" close" data-dismiss="modal"
+                            aria-hidden="true">
+                        x
+                    </button>
+                    <h1 class="modal-title" id="max">Find The Longest Word</h1>
+                </div>
+                <div class="modal-body col-sm-12">
+                    <div class="row"></div>
+                    <div class="col-sm-1"></div>
+                    <p>This will read a user specified text file and return the longest word contained in it. </p>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <p>Choose a file to read: </p>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                    <input type="file" id="fileinput" />
+                                    <script type="text/javascript">
+                                        function readSingleFile(evt)
+                                        {
+                                            var f = evt.target.files[0];
+
+                                            if(f) {
+                                                var r = new FileReader();
+
+                                                r.onload = function(e){
+                                                    var fullText = r.result;
+                                                    var keep = /[a-z]/gi;
+                                                    fullText = fullText.match(keep).toLowerCase();
+                                                    arrayText = fullText.split(" ");
+                                                    findLongest(arrayText);
+                                                }
+                                                r.readAsText(f);
+
+                                            } else {
+                                                alert("Failed to load file");
+                                            }
+                                        }
+                                        document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
+                                    </script>
+                                        </div>
+                                        <div class="col-sm-4"></div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-5"></div>
+                                        <div class="col-sm-5">
+                                            <button type="button" class="btn btn-primary" onclick="findArmstrong()">Try it out!</button>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-2"></div>
+                                        <div id="foundLongest">RESULT: </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <pre class="brush: js text">
+        function findArmstrong() {
+            var output = "";
+            for (i = 100; i < 1000; i++) {
+                sum = Math.pow(i % 10, 3) + Math.pow(Math.floor(i / 100), 3) + Math.pow(Math.floor(i / 10) % 10, 3);
+                if (sum == i) {
+                    output += i.toString() + " ";
+                }
+            }
+            document.getElementById('foundArmstrong').innerHTML = "RESULT: " + output;
+        }
+                        </pre>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="modal-footer no-margin">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                   </body>
 
 
