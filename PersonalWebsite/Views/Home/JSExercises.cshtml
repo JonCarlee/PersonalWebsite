@@ -3,6 +3,7 @@
 <head>
     <title></title>
     <script>
+        var arrayText = [];
         function findMax() {
             var num1 = document.getElementById("num1").value;
             var num2 = document.getElementById("num2").value;
@@ -196,12 +197,49 @@
             var longest = "";
             var output = "";
             for (i = 0; i < arrayText.length; i++) {
+                console.log(arrayText[i]);
                 if (i == 0 || arrayText[i].length > longest.length) {
                     longest = arrayText[i];
+                    console.log(longest);
                 }
             }
-            output = "The longest word in the file is: " + longest;
-            document.querySelector('foundLongest').innerHTML = "RESULT: " + output;
+            output = "The longest word in the file is [" + longest + "]";
+            document.getElementById('foundLongest').innerHTML = "RESULT: " + output;
+        }
+        function filterLong() {
+            var outArray = [];
+            console.log(arrayText);
+            var duplicate = false;
+            var filter = document.getElementById('minLength').value;
+            filter = Math.floor(filter);
+            if (filter == "" || filter < 1) {
+                document.getElementById('filterPass').innerHTML = "RESULT: Please enter a positive integer."
+            } else {
+                for (i = 0; i < arrayText.length ; i++) {
+                    duplicate = false;
+                    if (arrayText[i].length > filter) {
+                        for (j = 0; duplicate != true; j++) {
+                            if (arrayText[i] == outArray[j]) {
+                                duplicate = true;
+                            }
+                            if (outArray[j] == null) {
+                                outArray[j] = arrayText[i];
+                                duplicate = true;
+                            }
+                        }
+                    }
+                }
+                for (i = 0; i < outArray.length; i++) {
+                    if (i == 0) {
+
+                    }
+                    else {
+                        outArray[i] = " " + outArray[i];
+                    }
+                }
+                output = "RESULT: The words that are longer than your filter are: " + outArray;
+                document.getElementById('filterPass').innerHTML = output;
+            }
         }
     </script>
 </head>
@@ -1086,8 +1124,8 @@ function findArmstrong() {
 
                                                 r.onload = function(e){
                                                     var fullText = r.result;
-                                                    var keep = /[a-z]/gi;
-                                                    fullText = fullText.match(keep).toLowerCase();
+                                                    fullText = fullText.toLowerCase();
+                                                    fullText = fullText.replace(/[^a-zA-Z]/gi, ' ');
                                                     arrayText = fullText.split(" ");
                                                     findLongest(arrayText);
                                                 }
@@ -1106,7 +1144,6 @@ function findArmstrong() {
                                     <div class="row">
                                         <div class="col-sm-5"></div>
                                         <div class="col-sm-5">
-                                            <button type="button" class="btn btn-primary" onclick="findArmstrong()">Try it out!</button>
                                         </div>
                                     </div>
                                     <br />
@@ -1144,6 +1181,104 @@ function findArmstrong() {
                     </div>
                 </div>
             </div>
+
+    <a href="" data-toggle="modal" data-target="#wordFilter">
+        <img src="~/img/sum.png" />
+    </a>
+
+    <div class="modal fade" id="wordFilter" tabindex="-1" role="dialog"
+         aria-labelledby="max" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header body-blue">
+                    <button type="button" class=" close" data-dismiss="modal"
+                            aria-hidden="true">
+                        x
+                    </button>
+                    <h1 class="modal-title" id="max">Filter The Words</h1>
+                </div>
+                <div class="modal-body col-sm-12">
+                    <div class="row"></div>
+                    <div class="col-sm-1"></div>
+                    <p>This will read a user specified text file and return the words longer than what the user specifies. </p>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <p>Choose a file to read: </p>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                    <input type="file" id="fileinput1" />
+                                    <script type="text/javascript">
+                                        function readSingleFile(evt) {
+                                            var f = evt.target.files[0];
+
+                                            if (f) {
+                                                var r = new FileReader();
+
+                                                r.onload = function (e) {
+                                                    var fullText = r.result;
+                                                    fullText = fullText.toLowerCase();
+                                                    fullText = fullText.replace(/[^a-zA-Z]/gi, ' ');
+                                                    arrayText = fullText.split(" ");
+                                                }
+                                                r.readAsText(f);
+
+                                            } else {
+                                                alert("Failed to load file");
+                                            }
+                                        }
+                                        document.getElementById('fileinput1').addEventListener('change', readSingleFile, false);
+                                    </script>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-5">
+                                    <input type="number" id="minLength" class="form-control"/>
+                                    <button type="button" class="btn btn-primary" onclick="filterLong()">Try it out!</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                <div id="filterPass">RESULT: </div>
+                                    </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <pre class="brush: js text">
+        function findArmstrong() {
+            var output = "";
+            for (i = 100; i < 1000; i++) {
+                sum = Math.pow(i % 10, 3) + Math.pow(Math.floor(i / 100), 3) + Math.pow(Math.floor(i / 10) % 10, 3);
+                if (sum == i) {
+                    output += i.toString() + " ";
+                }
+            }
+            document.getElementById('foundArmstrong').innerHTML = "RESULT: " + output;
+        }
+                        </pre>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                <div class="modal-footer no-margin">
+                </div>
+            </div>
+        </div>
+    </div>
+
                    </body>
 
 
