@@ -52,5 +52,11 @@ namespace PersonalWebsite.Controllers
 
             return View();
         }
+        public ActionResult Other()
+        {
+            ViewBag.Message = "Some Other Things About Me";
+
+            return View();
+        }
     }
 }

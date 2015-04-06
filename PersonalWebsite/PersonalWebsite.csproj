@@ -204,18 +204,31 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="css\Site.css" />
+    <Content Include="img\alice.png" />
+    <Content Include="img\armstrong.png" />
     <Content Include="img\arrow.png" />
     <Content Include="img\bg-1.jpg" />
     <Content Include="img\browser-cut.png" />
     <Content Include="img\browser.png" />
     <Content Include="img\close.png" />
+    <Content Include="img\count.png" />
+    <Content Include="img\factorial.png" />
     <Content Include="img\favicon.png" />
+    <Content Include="img\filter.png" />
+    <Content Include="img\findperfect.png" />
+    <Content Include="img\fizzbuzz.png" />
     <Content Include="img\general-1.jpg" />
     <Content Include="img\general-2.jpg" />
     <Content Include="img\general-3.jpg" />
     <Content Include="img\general-4.jpg" />
+    <Content Include="img\happy.png" />
     <Content Include="img\imac.png" />
-    <Content Include="img\max.png" />
+    <Content Include="img\isperfect.png" />
+    <Content Include="img\longest.png" />
+    <Content Include="img\max2.png" />
+    <Content Include="img\palindrome.png" />
+    <Content Include="img\product.png" />
+    <Content Include="img\screenshot.png" />
     <Content Include="img\slide-1.jpg" />
     <Content Include="img\slide-1.png" />
     <Content Include="img\loading.gif" />
@@ -230,7 +243,7 @@
     <Content Include="img\old-slide-1.jpg" />
     <Content Include="img\slide-2.jpg" />
     <Content Include="img\slide-3.jpg" />
-    <Content Include="img\sum.png" />
+    <Content Include="img\sum2.png" />
     <Content Include="img\thumbnail-1.jpg" />
     <Content Include="img\thumbnail-2.jpg" />
     <Content Include="img\thumbnail-3.jpg" />
@@ -365,6 +378,7 @@
     <Content Include="Views\Home\JSExercises.cshtml" />
     <Content Include="Views\Home\BugTracker.cshtml" />
     <Content Include="Views\Home\Resume.cshtml" />
+    <Content Include="Views\Home\Other.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
