@@ -211,6 +211,7 @@
     <Content Include="img\browser-cut.png" />
     <Content Include="img\browser.png" />
     <Content Include="img\close.png" />
+    <Content Include="img\cmf.jpeg" />
     <Content Include="img\count.png" />
     <Content Include="img\factorial.png" />
     <Content Include="img\favicon.png" />
@@ -229,7 +230,7 @@
     <Content Include="img\palindrome.png" />
     <Content Include="img\product.png" />
     <Content Include="img\screenshot.png" />
-    <Content Include="img\slide-1.jpg" />
+    <Content Include="img\slide-1-linked.jpg" />
     <Content Include="img\slide-1.png" />
     <Content Include="img\loading.gif" />
     <Content Include="img\next.png" />
@@ -240,9 +241,11 @@
     <Content Include="img\product-1.jpg" />
     <Content Include="img\product-2.jpg" />
     <Content Include="img\product-3.jpg" />
-    <Content Include="img\old-slide-1.jpg" />
+    <Content Include="img\slide-1.jpg" />
     <Content Include="img\slide-2.jpg" />
     <Content Include="img\slide-3.jpg" />
+    <Content Include="img\soundcloud.jpg" />
+    <Content Include="img\soundcloud.png" />
     <Content Include="img\sum2.png" />
     <Content Include="img\thumbnail-1.jpg" />
     <Content Include="img\thumbnail-2.jpg" />

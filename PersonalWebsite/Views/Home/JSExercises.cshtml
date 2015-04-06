@@ -98,21 +98,27 @@
             }
         }
         function fizzBuzz() {
+            var count = Math.floor(document.getElementById('howFizzy').value);
             var text = "";
-            for (i = 1; i < 101; i++) {
-                if (i % 3 == 0) {
-                    if (i % 5 == 0) {
-                        text += "FizzBuzz" + "<br>";
-                    } else {
-                        text += "Fizz" + "<br>";
-                    }
-                } else if (i % 5 == 0) {
-                    text += "Buzz" + "<br>";
-                } else {
-                    text += i + "<br>";
-                }
+            if (count == "" || count < 1) {
+                document.getElementById('fizzedBuzzed').innerHTML = "RESULT: Please enter a positive integer."
             }
-            document.getElementById('fizzedBuzzed').innerHTML = "RESULT: " + text;
+            else {
+                for (i = 1; i <= count; i++) {
+                    if (i % 3 == 0) {
+                        if (i % 5 == 0) {
+                            text += "FizzBuzz" + "<br>";
+                        } else {
+                            text += "Fizz" + "<br>";
+                        }
+                    } else if (i % 5 == 0) {
+                        text += "Buzz" + "<br>";
+                    } else {
+                        text += i + "<br>";
+                    }
+                }
+                document.getElementById('fizzedBuzzed').innerHTML = "RESULT: " + text;
+            }
         }
         function isPerfectNumber() {
             var sum = 0;
@@ -754,11 +760,12 @@ function checkPalindrome() {
                     <p>This will read each number from 1 to 100 and check to see if it's divisible by both 3 and 5.  If it's divisible by 3 or 5, the number is replaced by Fizz and Buzz, respectively.  If it's divisible by both, the number is replaced by fizzbuzz.  If none apply, the number is displayed normally.</p>
                     <div class="row">
                         <div class="col-sm-1"></div>
-                        <p></p>
+                        <p>Enter a number:</p>
                         <form>
                             <div class="row">
                                 <div class="col-sm-4"></div>
                                 <div class="col-sm-4">
+                                    <input type="number" id="howFizzy" class="form-control" />
                                 </div>
                                 <div class="col-sm-4"></div>
                             </div>
@@ -784,23 +791,29 @@ function checkPalindrome() {
                     <div class="col-sm-1"></div>
                     <div class="col-sm-10">
                         <pre class="brush: js text">
-function fizzBuzz() {
-    var text = "";
-    for (i = 1; i < 101; i++) {
-        if (i % 3 == 0) {
-            if (i % 5 == 0) {
-                text += "FizzBuzz" + "<br>";
-            } else {
-                text += "Fizz" + "<br>";
+        function fizzBuzz() {
+            var count = Math.floor(document.getElementById('howFizzy').value);
+            var text = "";
+            if (count == "" || count < 1) {
+                document.getElementById('fizzedBuzzed').innerHTML = "RESULT: Please enter a positive integer."
             }
-        } else if (i % 5 == 0) {
-            text += "Buzz" + "<br>";
-        } else {
-            text += i + "<br>";
+            else {
+                for (i = 1; i <= count; i++) {
+                    if (i % 3 == 0) {
+                        if (i % 5 == 0) {
+                            text += "FizzBuzz" + "<br>";
+                        } else {
+                            text += "Fizz" + "<br>";
+                        }
+                    } else if (i % 5 == 0) {
+                        text += "Buzz" + "<br>";
+                    } else {
+                        text += i + "<br>";
+                    }
+                }
+                document.getElementById('fizzedBuzzed').innerHTML = "RESULT: " + text;
+            }
         }
-    }
-    document.getElementById('fizzedBuzzed').innerHTML = "RESULT: " + text;
-}
                 </pre>
                     </div>
                     <div class="col-sm-1"></div>
