@@ -379,6 +379,7 @@
     <Content Include="Views\Home\BugTracker.cshtml" />
     <Content Include="Views\Home\Resume.cshtml" />
     <Content Include="Views\Home\Other.cshtml" />
+    <None Include="Properties\PublishProfiles\jcarlee.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
