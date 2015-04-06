@@ -241,6 +241,53 @@
                 document.getElementById('filterPass').innerHTML = output;
             }
         }
+        function wordList(arrayText) {
+            var word = [];
+            var wordCount = [];
+            var highest = 0;
+            var highPos = 0;
+            output = "RESULT: The word count for each word is:" + "<br>";
+            for (i = 0; i < arrayText.length; i++) {
+                for (j = 0; j > -1; j++) {
+                    if (arrayText[i] == word[j]) {
+                        wordCount[j]++;
+                        j = -100;
+                    }
+                    else if (word[j] == null && arrayText[i] != '') {
+                        word[j] = arrayText[i];
+                        console.log(arrayText[i]);
+                        wordCount[j] = 1;
+                        j = -100;
+                    }
+                    else if (word[j] == null && arrayText[i] == ''){
+                        j = -100;
+                    }
+                }
+            }
+            for (i = 0; i < word.length; i++) {
+                highest = wordCount[0];
+                highPos = 0;
+                for (j = 0; j < word.length; j++) {
+                    if (wordCount[j] > highest) {
+                        highPos = j
+                        highest = wordCount[j]
+                    }
+                }
+                output += "  " + (i + 1) + ") " + word[highPos] + " " + wordCount[highPos] + "<br>";
+                wordCount[highPos] = 0;
+            }
+            document.getElementById('frequency').innerHTML = output;
+        }
+        function findAlice(stringArray) {
+            var counter = 0;
+            for (i = 0; i < stringArray.length; i++) {
+                if (stringArray[i] == "alice") {
+                    counter++;
+                }
+            }
+            output = "RESULT: Alice appears in the document " + counter + " times.";
+            document.getElementById('foundAlice').innerHTML = output;
+        }
     </script>
 </head>
 <body>
@@ -1162,16 +1209,19 @@ function findArmstrong() {
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
                                 <pre class="brush: js text">
-        function findArmstrong() {
-            var output = "";
-            for (i = 100; i < 1000; i++) {
-                sum = Math.pow(i % 10, 3) + Math.pow(Math.floor(i / 100), 3) + Math.pow(Math.floor(i / 10) % 10, 3);
-                if (sum == i) {
-                    output += i.toString() + " ";
-                }
-            }
-            document.getElementById('foundArmstrong').innerHTML = "RESULT: " + output;
+function findLongest(arrayText) {
+    var longest = "";
+    var output = "";
+    for (i = 0; i < arrayText.length; i++) {
+        console.log(arrayText[i]);
+        if (i == 0 || arrayText[i].length > longest.length) {
+            longest = arrayText[i];
+            console.log(longest);
         }
+    }
+    output = "The longest word in the file is [" + longest + "]";
+    document.getElementById('foundLongest').innerHTML = "RESULT: " + output;
+}
                         </pre>
                             </div>
                             <div class="col-sm-1"></div>
@@ -1203,7 +1253,7 @@ function findArmstrong() {
                     <p>This will read a user specified text file and return the words longer than what the user specifies. </p>
                     <div class="row">
                         <div class="col-sm-1"></div>
-                        <p>Choose a file to read: </p>
+                        <p>Choose a file to read and then enter a number to filter out words of equal and lesser length: </p>
                         <form>
                             <div class="row">
                                 <div class="col-sm-4"></div>
@@ -1235,11 +1285,13 @@ function findArmstrong() {
                             </div>
                             <br />
                             <div class="row">
-                                <div class="col-sm-5"></div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
                                     <input type="number" id="minLength" class="form-control"/>
-                                    <button type="button" class="btn btn-primary" onclick="filterLong()">Try it out!</button>
                                 </div>
+                            </div>
+                            <div class="row" style="text-align: center">
+                                <button type="button" class="btn btn-primary" onclick="filterLong()">Try it out!</button>
                             </div>
                             <br />
                             <div class="row">
@@ -1259,16 +1311,41 @@ function findArmstrong() {
                     <div class="col-sm-1"></div>
                     <div class="col-sm-10">
                         <pre class="brush: js text">
-        function findArmstrong() {
-            var output = "";
-            for (i = 100; i < 1000; i++) {
-                sum = Math.pow(i % 10, 3) + Math.pow(Math.floor(i / 100), 3) + Math.pow(Math.floor(i / 10) % 10, 3);
-                if (sum == i) {
-                    output += i.toString() + " ";
+function filterLong() {
+    var outArray = [];
+    console.log(arrayText);
+    var duplicate = false;
+    var filter = document.getElementById('minLength').value;
+    filter = Math.floor(filter);
+    if (filter == "" || filter < 1) {
+        document.getElementById('filterPass').innerHTML = "RESULT: Please enter a positive integer."
+    } else {
+        for (i = 0; i < arrayText.length ; i++) {
+            duplicate = false;
+            if (arrayText[i].length > filter) {
+                for (j = 0; duplicate != true; j++) {
+                    if (arrayText[i] == outArray[j]) {
+                        duplicate = true;
+                    }
+                    if (outArray[j] == null) {
+                        outArray[j] = arrayText[i];
+                        duplicate = true;
+                    }
                 }
             }
-            document.getElementById('foundArmstrong').innerHTML = "RESULT: " + output;
         }
+        for (i = 0; i < outArray.length; i++) {
+            if (i == 0) {
+
+            }
+            else {
+                outArray[i] = " " + outArray[i];
+            }
+        }
+        output = "RESULT: The words that are longer than your filter are: " + outArray;
+        document.getElementById('filterPass').innerHTML = output;
+    }
+}
                         </pre>
                     </div>
                     <div class="col-sm-1"></div>
@@ -1279,6 +1356,226 @@ function findArmstrong() {
         </div>
     </div>
 
+    <a href="" data-toggle="modal" data-target="#wordList">
+        <img src="~/img/sum.png" />
+    </a>
+
+    <div class="modal fade" id="wordList" tabindex="-1" role="dialog"
+         aria-labelledby="max" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header body-blue">
+                    <button type="button" class=" close" data-dismiss="modal"
+                            aria-hidden="true">
+                        x
+                    </button>
+                    <h1 class="modal-title" id="max">List The Words</h1>
+                </div>
+                <div class="modal-body col-sm-12">
+                    <div class="row"></div>
+                    <div class="col-sm-1"></div>
+                    <p>This will read a user specified text file and return the words and the frequency of the words with the most frequent at the top. </p>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <p>Choose a file to read: </p>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                    <input type="file" id="fileinput2" />
+                                    <script type="text/javascript">
+                                        function readSingleFile(evt) {
+                                            var f = evt.target.files[0];
+
+                                            if (f) {
+                                                var r = new FileReader();
+
+                                                r.onload = function (e) {
+                                                    var fullText = r.result;
+                                                    fullText = fullText.toLowerCase();
+                                                    fullText = fullText.replace(/[^a-zA-Z']/gi, ' ');
+                                                    fullText = fullText.replace(/'/gi, '');
+                                                    arrayText = fullText.split(" ");
+                                                    wordList(arrayText);
+                                                }
+                                                r.readAsText(f);
+
+                                            } else {
+                                                alert("Failed to load file");
+                                            }
+                                        }
+                                        document.getElementById('fileinput2').addEventListener('change', readSingleFile, false);
+                                    </script>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-5">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <div id="frequency">RESULT: </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <pre class="brush: js text">
+ function wordList(arrayText) {
+    var word = [];
+    var wordCount = [];
+    var highest = 0;
+    var highPos = 0;
+    output = "RESULT: The word count for each word is:" + "<br>";
+    for (i = 0; i < arrayText.length; i++) {
+        for (j = 0; j > -1; j++) {
+            if (arrayText[i] == word[j]) {
+                wordCount[j]++;
+                j = -100;
+            }
+            else if (word[j] == null && arrayText[i] != '') {
+                word[j] = arrayText[i];
+                console.log(arrayText[i]);
+                wordCount[j] = 1;
+                j = -100;
+            }
+            else if (word[j] == null && arrayText[i] == ''){
+                j = -100;
+            }
+        }
+    }
+    for (i = 0; i < word.length; i++) {
+        highest = wordCount[0];
+        highPos = 0;
+        for (j = 0; j < word.length; j++) {
+            if (wordCount[j] > highest) {
+                highPos = j
+                highest = wordCount[j]
+            }
+        }
+        output += "  " + (i + 1) + ") " + word[highPos] + " " + wordCount[highPos] + "<br>";
+        wordCount[highPos] = 0;
+    }
+    document.getElementById('frequency').innerHTML = output;
+}
+                        </pre>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                <div class="modal-footer no-margin">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="" data-toggle="modal" data-target="#alice">
+        <img src="~/img/sum.png" />
+    </a>
+
+    <div class="modal fade" id="alice" tabindex="-1" role="dialog"
+         aria-labelledby="max" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header body-blue">
+                    <button type="button" class=" close" data-dismiss="modal"
+                            aria-hidden="true">
+                        x
+                    </button>
+                    <h1 class="modal-title" id="max">How Many "Alice"s Are There?</h1>
+                </div>
+                <div class="modal-body col-sm-12">
+                    <div class="row"></div>
+                    <div class="col-sm-1"></div>
+                    <p>This will read a user specified text file and return the number of times alice appears in the text. </p>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <p>Choose a file to read: </p>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                    <input type="file" id="fileinput3" />
+                                    <script type="text/javascript">
+                                        function readSingleFile(evt) {
+                                            var f = evt.target.files[0];
+
+                                            if (f) {
+                                                var r = new FileReader();
+
+                                                r.onload = function (e) {
+                                                    var fullText = r.result;
+                                                    fullText = fullText.toLowerCase();
+                                                    fullText = fullText.replace(/[^a-zA-Z']/gi, ' ');
+                                                    fullText = fullText.replace(/'/gi, '');
+                                                    arrayText = fullText.split(" ");
+                                                    findAlice(arrayText);
+                                                }
+                                                r.readAsText(f);
+
+                                            } else {
+                                                alert("Failed to load file");
+                                            }
+                                        }
+                                        document.getElementById('fileinput3').addEventListener('change', readSingleFile, false);
+                                    </script>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-5">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <div id="foundAlice">RESULT: </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <pre class="brush: js text">
+function findAlice(stringArray) {
+    var counter = 0;
+    for (i = 0; i < stringArray.length; i++) {
+        if (stringArray[i] == "alice") {
+            counter++;
+        }
+    }
+    output = "RESULT: Alice appears in the document " + counter + " times.";
+    document.getElementById('foundAlice').innerHTML = output;
+}
+                        </pre>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                <div class="modal-footer no-margin">
+                </div>
+            </div>
+        </div>
+    </div>
                    </body>
 
 
