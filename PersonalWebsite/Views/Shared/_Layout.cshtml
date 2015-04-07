@@ -39,7 +39,7 @@
                      <i class="fa fa-phone-square"></i> Tel.: (336) 202-3371
                  </span>
                  <a href="sign-up.html" class="pull-right"><i class="fa fa-arrow-circle-down"></i> Sign Up</a> 
-                 <a href="sign-in.html" class="pull-right"><i class="fa fa-sign-in"></i> Sign In</a> 
+                 <a href="@Url.Action("Login", "Account")" class="pull-right"><i class="fa fa-sign-in"></i> Sign In</a>
                  <a href="#" class="pull-right hidden" id="nav-search-close"><i class="fa fa-times"></i></a>
              </div>
          </div>
@@ -74,9 +74,25 @@
                         <li class="bg-hover-color">
                             @Html.ActionLink("Resume", "Resume", "Home")
                         </li>
+                        
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="bg-hover-color">
+                                @Html.ActionLink("Admin", "Admin", "Posts")
+                            </li>
+                        }
+                        <li class="bg-hover-color">
+                            @Html.ActionLink("Blog", "Index", "Posts")
+                        </li>
                         <li class="bg-hover-color">
                             @Html.ActionLink("Other", "Other", "Home")
                         </li>
+                        @if(User.IsInRole("Admin")){
+	<li>
+		@Html.ActionLink("Admin", "Admin", "Posts")
+	</li>
+}
+
                     </ul>
                 </div>     
             </div>
@@ -150,6 +166,7 @@
             <p>&copy; @DateTime.Now.Year - Jon Carlee</p>
         </footer>
     </div>
+    
                    
          @Scripts.Render("~/bundles/jquery")
          @Scripts.Render("~/bundles/bootstrap")
@@ -164,5 +181,6 @@
     <script src="~/js/shCore.js"></script>
     <script src="~/js/shBrushJScript.js"></script>
     <script>SyntaxHighlighter.all();</script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
