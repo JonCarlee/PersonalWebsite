@@ -23,6 +23,7 @@ namespace PersonalWebsite.Migrations
             if (!context.Roles.Any(r => r.Name == "Admin"))
             {
                 roleManager.Create(new IdentityRole { Name = "Admin" });
+                roleManager.Create(new IdentityRole { Name = "Moderator" });
             }
             var userManager = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(context));
@@ -33,20 +34,23 @@ namespace PersonalWebsite.Migrations
             {
                 user = new ApplicationUser
                 {
-                    UserName = "admin@CoderFoundry.com",
-                    Email = "admin@CoderFoundry.com",
+                    UserName = "admin@coderfoundry.com",
+                    Email = "admin@coderfoundry.com",
                     FirstName = "Jon",
                     LastName = "Carlee",
                     DisplayName = "Jon Carlee"
                 };
-                userManager.Create(new ApplicationUser{}, "Abc123");
+                userManager.Create(new ApplicationUser { }, "Abc123");
             }
-            else{
+            else
+            {
                 user = context.Users.Single(u => u.Email == "admin@coderfoundry.com");
             }
-            if (!userManager.IsInRole(user.Id, "Admin")){
+            if (!userManager.IsInRole(user.Id, "Admin"))
+            {
                 userManager.AddToRole(user.Id, "Admin");
+            }
+
             }
         }
     }
-}

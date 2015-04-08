@@ -117,13 +117,12 @@ namespace PersonalWebsite.Controllers
                 post.Updated = System.DateTimeOffset.Now;
 
                 db.Entry(post).Property(p => p.Body).IsModified = true;
-                db.Entry(post).Property(p => p.Title).IsModified = true;
                 db.Entry(post).Property(p => p.MediaURL).IsModified = true;
                 db.Entry(post).Property(p => p.Updated).IsModified = true;
                 db.SaveChanges();
-                return RedirectToAction("Admin");
+                
             }
-            return View(post);
+            return RedirectToAction("Admin");
         }
 
         // GET: Posts/Delete/5
