@@ -32,7 +32,7 @@
             <hr>
 
             <!-- Post Content -->
-            <p class="lead">@Html.Raw(Model.Slug)</p>
+            <p class="lead"></p>
             <p>@Html.Raw(Model.Body)</p>
             <hr>
 
@@ -147,7 +147,10 @@
         <!-- /.row -->
     </footer>
 <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id})
+        }
         @Html.ActionLink("Back to List", "Index")
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")

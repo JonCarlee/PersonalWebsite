@@ -35,13 +35,13 @@ namespace PersonalWebsite.Controllers
 
         // GET: Posts/Details/5
         [AllowAnonymous]
-        public ActionResult Details(int? id)
+        public ActionResult Details(string Slug)
         {
-            if (id == null)
+            if (String.IsNullOrWhiteSpace(Slug))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Find(id);
+            Post post = db.Posts.FirstOrDefault(p=>p.Slug == Slug);
             if (post == null)
             {
                 return HttpNotFound();
@@ -60,17 +60,34 @@ namespace PersonalWebsite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Created,Updated,Title,Body,MediaURL,Slug")] Post post)
+        public ActionResult Create([Bind(Include = "Created,Body,Title,Published")] Post post, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                db.Posts.Add(post);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                var Slug = StringUtilities.URLFriendly(post.Title);
+                if (String.IsNullOrWhiteSpace(Slug))
+                {
+                    ModelState.AddModelError("Title", "Invalid title.");
+                    return View(post);
+                }
+                if (db.Posts.Any(p => p.Slug == Slug))
+                {
+                    ModelState.AddModelError("Title", "The title must be unique.");
+                    return View(post);
+                }
+                else
+                {
+                    post.Created = System.DateTimeOffset.Now;
+                    post.Slug = Slug;
 
+                    db.Posts.Add(post);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
             return View(post);
         }
+
 
         // GET: Posts/Edit/5
         public ActionResult Edit(int? id)
@@ -92,13 +109,19 @@ namespace PersonalWebsite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Title,Body,MediaURL,Slug")] Post post)
+        public ActionResult Edit([Bind(Include = "Id,Updated,Title,Body,MediaURL")] Post post)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(post).State = EntityState.Modified;
+                db.Posts.Attach(post);
+                post.Updated = System.DateTimeOffset.Now;
+
+                db.Entry(post).Property(p => p.Body).IsModified = true;
+                db.Entry(post).Property(p => p.Title).IsModified = true;
+                db.Entry(post).Property(p => p.MediaURL).IsModified = true;
+                db.Entry(post).Property(p => p.Updated).IsModified = true;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Admin");
             }
             return View(post);
         }

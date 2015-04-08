@@ -7,6 +7,13 @@
     ViewBag.Title = "Index";
 }
 <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<script>
+    $(document).ready(function () {
+        $(".ellipsis").dotdotdot({
+            watch: "window"
+        });
+    });
+</script>
 <div class="container">
     <div class="row">
 
@@ -22,7 +29,7 @@
             {
               <!-- First Blog Post -->
                 <h2>
-                    <a href="@Url.Action("Details", new { id = post.Id })">@post.Title</a>
+                    <a href="@Url.Action("Details", new { Slug = post.Slug })">@post.Title</a>
                 </h2>
                 <p class="lead">
                     by <a href="index.php">Jon Carlee</a>
@@ -31,8 +38,11 @@
                 <hr>
                 <img class="img-responsive" src="http://placehold.it/900x300" alt="">
                 <hr>
-                <p>@Html.Raw(post.Body)</p>
-                <a class="btn btn-color" href="@Url.Action("Details", new { id = post.Id})">Read More! </a>
+                <!--<p>@Html.Raw(post.Body)</p>-->
+                <div class="box box-3 ellipsis-r" style="width: 1266px; margin-left: -263px; word-wrap: break-word;">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                </div>
+                <a class="btn btn-color" href="@Url.Action("Details", new { Slug = post.Slug})">Read More! </a>
 
                 <hr>
             }
