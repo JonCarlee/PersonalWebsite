@@ -43,8 +43,6 @@
                 <form role="form">
                     <div class="form-group">
                         <textarea class="form-control" rows="3"></textarea>
-                        @Html.EditorFor(m => m.Comments, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(m => m.Comments, "", new { @class = "text-danger" })
                     </div>
                     <button type="submit" class="btn btn-color">Submit</button>
                 </form>

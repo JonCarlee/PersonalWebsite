@@ -1,9 +1,12 @@
 ﻿@using PersonalWebsite.Models
+
 @model List<Post>
+@using PagedList;
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
 }
-
+<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
 <div class="container">
     <div class="row">
 
@@ -11,11 +14,11 @@
         <div class="col-md-8">
 
             <h1 class="page-header">
-                Page Heading
-                <small>Secondary Text</small>
+                Jon's Blog
+                <small>Updated Whenever I Feel Like It! =D</small>
             </h1>
 
-            @foreach (var post in Model)
+            @foreach (var post in ViewBag.onePageOfPosts)
             {
               <!-- First Blog Post -->
                 <h2>
@@ -28,7 +31,7 @@
                 <hr>
                 <img class="img-responsive" src="http://placehold.it/900x300" alt="">
                 <hr>
-                <p>@Html.Raw(post => post.Body.Substring(0, 200))</p>
+                <p>@Html.Raw(post.Body)</p>
                 <a class="btn btn-color" href="@Url.Action("Details", new { id = post.Id})">Read More! </a>
 
                 <hr>
@@ -113,5 +116,6 @@
         </div>
 
     </div>
+    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfPosts, page => Url.Action("Index", new { page }))
 
 </div>

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PersonalWebsite.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace PersonalWebsite.Controllers
 {
@@ -16,9 +18,14 @@ namespace PersonalWebsite.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.Posts.OrderByDescending(p => p.Created).Take(3).ToList());
+            var posts = db.Posts.ToList();
+            var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
+            var onePageOfPosts = posts.ToPagedList(pageNumber, 3); // will only contain 3 products max because of the pageSize
+
+            ViewBag.OnePageOfPosts = onePageOfPosts;
+            return View();
         }
         // GET: Posts
         public ActionResult Admin()
