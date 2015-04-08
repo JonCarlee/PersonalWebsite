@@ -3,11 +3,14 @@
 @{
     ViewBag.Title = "Index";
 }
-<div class="container"
-<h2>Index</h2>
+<div class="col-sm-1"></div>
+<div class="col-sm-10">
+<h2 style="text-align: center">Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p style="text-align: right">
+    <a href="@Html.ActionLink("Create New", "Create")">
+        
+    </a>
 </p>
 <table class="table">
     <tr>
@@ -62,3 +65,4 @@
 
 </table>
     </div>
+<div class="col-sm-1"></div>
