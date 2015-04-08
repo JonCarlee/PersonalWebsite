@@ -28,8 +28,8 @@
                 <hr>
                 <img class="img-responsive" src="http://placehold.it/900x300" alt="">
                 <hr>
-                <p>@Html.Raw(post.Body)</p>
-                <a class="btn btn-primary" href="@Url.Action("Details", new { id = post.Id})">Read More! </a>
+                <p>@Html.Raw(post => post.Body.Substring(0, 200))</p>
+                <a class="btn btn-color" href="@Url.Action("Details", new { id = post.Id})">Read More! </a>
 
                 <hr>
             }

@@ -87,12 +87,6 @@
                         <li class="bg-hover-color">
                             @Html.ActionLink("Other", "Other", "Home")
                         </li>
-                        @if(User.IsInRole("Admin")){
-	<li>
-		@Html.ActionLink("Admin", "Admin", "Posts")
-	</li>
-}
-
                     </ul>
                 </div>     
             </div>
