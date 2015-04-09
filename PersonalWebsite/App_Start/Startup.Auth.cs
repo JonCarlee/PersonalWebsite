@@ -54,15 +54,15 @@ namespace PersonalWebsite
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1611824689052677",
+               appSecret: "8730c5e8e314066fb4f33d94917910f4");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "600619718520-dreve4saroar8rf063ronrqu1nq31nd0.apps.googleusercontent.com",
+                ClientSecret = "KGLkUQVGMt0T4W-FR1-x5J55"
+            });
         }
     }
 }

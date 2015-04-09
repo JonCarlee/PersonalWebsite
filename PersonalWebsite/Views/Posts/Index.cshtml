@@ -7,13 +7,7 @@
     ViewBag.Title = "Index";
 }
 <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
-<script>
-    $(document).ready(function () {
-        $(".ellipsis").dotdotdot({
-            watch: "window"
-        });
-    });
-</script>
+
 <div class="container">
     <div class="row">
 
@@ -36,10 +30,10 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> @post.Created.DateTime.ToLongDateString()</p>
                 <hr>
-                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                <img class="img-responsive" src="https://placehold.it/900x300" alt="">
                 <hr>
                 <!--<p>@Html.Raw(post.Body)</p>-->
-                <div class="box box-3 ellipsis-r" style="width: 1266px; margin-left: -263px; word-wrap: break-word;">
+                <div class="stupid" style="height: 100px; max-height: 100px;">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
                 </div>
                 <a class="btn btn-color" href="@Url.Action("Details", new { Slug = post.Slug})">Read More! </a>
@@ -131,3 +125,12 @@
     @Html.PagedListPager((IPagedList)ViewBag.OnePageOfPosts, page => Url.Action("Index", new { page }))
 
 </div>
+@section Scripts{
+<script>
+    $(document).ready(function () {
+        $(".stupid").dotdotdot({
+            watch: "window"
+        });
+    });
+</script>
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/css/css")
     @Scripts.Render("~/bundles/modernizr")
     
@@ -17,8 +17,8 @@
     <link href="~/isotope/css/style.css" rel="stylesheet">
     <link href="~/css/animate.css" rel="stylesheet">
     <link href="~/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500,400italic,500italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,500,400italic,500italic,700italic' rel='stylesheet' type='text/css'>
     <style>
         div.background{
             background-color:black;
@@ -38,7 +38,7 @@
                  <span class="phone">
                      <i class="fa fa-phone-square"></i> Tel.: (336) 202-3371
                  </span>
-                 <a href="sign-up.html" class="pull-right"><i class="fa fa-arrow-circle-down"></i> Sign Up</a> 
+                 <a href="@Url.Action("Register", "Account")" class="pull-right"><i class="fa fa-arrow-circle-down"></i> Sign Up</a> 
                  <a href="@Url.Action("Login", "Account")" class="pull-right"><i class="fa fa-sign-in"></i> Sign In</a>
                  <a href="#" class="pull-right hidden" id="nav-search-close"><i class="fa fa-times"></i></a>
              </div>
@@ -165,11 +165,11 @@
          @Scripts.Render("~/bundles/jquery")
          @Scripts.Render("~/bundles/bootstrap")
          @RenderSection("js", required: false)
+    <script src="~/js/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/scrolltopcontrol.js"></script>
-    <script src="jquery.js"></script>
-    <script src="jquery.dotdotdot.js"></script>
+    <script src="~/js/jquery.dotdotdot.js"></script>
     <script src="~/js/jquery.sticky.js"></script>
     <script src="~/isotope/js/jquery.isotope.min.js"></script>
     <script src="~/js/isotope-custom.js"></script>
