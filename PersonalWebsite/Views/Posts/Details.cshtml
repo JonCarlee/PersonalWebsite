@@ -27,7 +27,7 @@
             <hr>
 
             <!-- Preview Image -->
-            <img class="img-responsive" src="Model.MediaURL" onerror="whoops(this)" style="max-height: 300px; min-width: 290px;">
+            <img class="img-responsive" src="@Model.MediaURL" onerror="whoops(this)" style="max-height: 300px; min-width: 290px;">
 
             <hr>
 
@@ -52,21 +52,21 @@
 
             <!-- Posted Comments -->
             <!-- Comment -->
-            @foreach(var comment in Model.Comments)
-{
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="http://placehold.it/64x64" alt="">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">
-                        @comment.Author.DisplayName
-                        <small>@comment.Created.DateTime.ToShortDateString()</small>
-                    </h4>
-                    @comment.Body
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            @comment.Author.DisplayName
+                            <small>@comment.Created.DateTime.ToShortDateString()</small>
+                        </h4>
+                        @comment.Body
+                    </div>
                 </div>
-            </div>
-}
+            }
         </div>
         <!-- Blog Sidebar Widgets Column -->
         <div class="col-md-4">
@@ -91,32 +91,32 @@
                     <div class="col-lg-6">
                         <ul class="list-unstyled">
                             <li>
-                                <a href="#">A Category</a>
+                                <a href="#">A Thing</a>
                             </li>
                             <li>
-                                <a href="#">Another Category</a>
+                                <a href="#">Another Thing</a>
                             </li>
                             <li>
-                                <a href="#">Yet ANOTHER Category</a>
+                                <a href="#">A Third Thing</a>
                             </li>
                             <li>
-                                <a href="#">How Many Categories Are Here?</a>
+                                <a href="#">A Thing Thing</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-lg-6">
                         <ul class="list-unstyled">
                             <li>
-                                <a href="#">lolololololo1ololololol</a>
+                                <a href="#">Not a Thing</a>
                             </li>
                             <li>
-                                <a href="#">Did You See What I Did There?</a>
+                                <a href="#">Possibly a Thing</a>
                             </li>
                             <li>
-                                <a href="#">Lotsa Points If You Found It</a>
+                                <a href="#">Wanna Be a Thing</a>
                             </li>
                             <li>
-                                <a href="#">[Insert Words And Maybe Something Witty Here]</a>
+                                <a href="#">[Insert A Thing Here]</a>
                             </li>
                         </ul>
                     </div>
@@ -126,7 +126,7 @@
 
             <!-- Side Widget Well -->
             <div class="well">
-                <h4>Side Widget Well</h4>
+                <h4>An Unnamed Thing</h4>
                 <p>So yeah!  Side Widget Well.  Cool. (?????)  Maybe one day I'll figure out what should go here?</p>
             </div>
 
@@ -146,21 +146,26 @@
         </div>`
         <!-- /.row -->
     </footer>
-<p>
-        @if (User.IsInRole("Admin"))
-        {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id})
-        }
-        @Html.ActionLink("Back to List", "Index")
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    function whoops(image) {
-    image.onerror = "";
-    image.src = "http://i93.photobucket.com/albums/l77/afkimel/Misc/THERES-NOTHING-HERE-e1348677191662_zpse6d3406c.jpg"
-    return true;
-    }
-    }
-
+    <p>
 
     </p>
 </div>
+
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+}
+@Html.ActionLink("Back to List", "Index")
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+    function whoops(image) {
+        image.onerror = "";
+        image.src = "http://i93.photobucket.com/albums/l77/afkimel/Misc/THERES-NOTHING-HERE-e1348677191662_zpse6d3406c.jpg"
+        return true;
+    }
+    </script>
+
+}
+

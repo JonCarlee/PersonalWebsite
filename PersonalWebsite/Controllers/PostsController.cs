@@ -60,7 +60,7 @@ namespace PersonalWebsite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Created,Body,Title,Published")] Post post, HttpPostedFileBase image)
+        public ActionResult Create([Bind(Include = "Created,Body,Title,Published, MediaURL")] Post post, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace PersonalWebsite.Controllers
 
                     db.Posts.Add(post);
                     db.SaveChanges();
-                    return RedirectToAction("Edit");
+                    return RedirectToAction("Admin");
                 }
             }
             return View(post);
