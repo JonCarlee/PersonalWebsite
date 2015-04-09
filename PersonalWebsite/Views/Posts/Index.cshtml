@@ -16,7 +16,7 @@
 
             <h1 class="page-header">
                 Jon's Blog
-                <small>Updated Whenever I Feel Like It! =D</small>
+                <small>Updated Whenever I Feel Like It! :D</small>
             </h1>
 
             @foreach (var post in ViewBag.onePageOfPosts)
@@ -30,11 +30,11 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> @post.Created.DateTime.ToLongDateString()</p>
                 <hr>
-                <img class="img-responsive" src="https://placehold.it/900x300" alt="">
+    <img class="img-responsive" src="@post.MediaURL" onerror="whoops(this)" style="max-height: 300px; min-width: 290px;">
                 <hr>
-                <!--<p>@Html.Raw(post.Body)</p>-->
+                <!--<p></p>-->
                 <div class="stupid" style="height: 100px; max-height: 100px;">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    @Html.Raw(post.Body)   
                 </div>
                 <a class="btn btn-color" href="@Url.Action("Details", new { Slug = post.Slug})">Read More! </a>
                 <!--
@@ -132,5 +132,10 @@
             watch: "window"
         });
     });
+    function whoops(image) {
+        image.onerror = "";
+        image.src = "http://i93.photobucket.com/albums/l77/afkimel/Misc/THERES-NOTHING-HERE-e1348677191662_zpse6d3406c.jpg"
+        return true;
+    }
 </script>
 }

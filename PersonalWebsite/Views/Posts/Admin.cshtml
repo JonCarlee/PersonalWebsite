@@ -1,17 +1,21 @@
 ﻿@model IEnumerable<PersonalWebsite.Models.Post>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Blog Entries Management";
 }
+<style>
+    #stupid{
+        max-height: 1.5em;
+        overflow: hidden;
+    }
+</style>
 <div class="col-sm-1"></div>
 <div class="col-sm-10">
-<h2 style="text-align: center">Index</h2>
+<h2 style="text-align: center">Blog Entries Management</h2>
 
-<p style="text-align: right">
-    <a href="@Html.ActionLink("Create New", "Create")">
-        
-    </a>
-</p>
+<div style="text-align: right">
+    <a href="@Url.Action("Create")" class="btn btn-color">Create New</a>
+</div>
 <table class="table">
     <tr>
         <th>
@@ -23,7 +27,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th>
+        <th style="width: 400px;">
             @Html.DisplayNameFor(model => model.Body)
         </th>
         <th>
@@ -35,7 +39,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Created)
@@ -46,7 +51,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        <td>
+        <td id="stupid">
             @Html.DisplayFor(modelItem => item.Body)
         </td>
         <td>
@@ -56,9 +61,9 @@
             @Html.DisplayFor(modelItem => item.Slug)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { slug=item.Slug }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { slug = item.Slug }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
 }
@@ -66,3 +71,12 @@
 </table>
     </div>
 <div class="col-sm-1"></div>
+@section Scripts{
+    <script>
+    $(document).ready(function () {
+        $("#stupid").dotdotdot({
+            watch: "window"
+        });
+    });
+    </script>
+    }

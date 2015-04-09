@@ -23,33 +23,55 @@ namespace PersonalWebsite.Migrations
             if (!context.Roles.Any(r => r.Name == "Admin"))
             {
                 roleManager.Create(new IdentityRole { Name = "Admin" });
+            }
+            if (!context.Roles.Any(r => r.Name == "Moderator"))
+            {
                 roleManager.Create(new IdentityRole { Name = "Moderator" });
             }
+   
             var userManager = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(context));
 
             ApplicationUser user;
 
-            if (!context.Users.Any(r => r.Email == "admin@coderfoundry.com"))
+            if (!context.Users.Any(r => r.Email == "joncarlee@gmail.com"))
             {
                 user = new ApplicationUser
                 {
-                    UserName = "admin@coderfoundry.com",
-                    Email = "admin@coderfoundry.com",
+                    UserName = "joncarlee@gmail.com",
+                    Email = "joncarlee@gmail.com",
                     FirstName = "Jon",
                     LastName = "Carlee",
                     DisplayName = "Jon Carlee"
                 };
-                userManager.Create(new ApplicationUser { }, "Abc123");
+                userManager.Create(user, "This is my page");
             }
             else
             {
-                user = context.Users.Single(u => u.Email == "admin@coderfoundry.com");
+                user = context.Users.Single(u => u.Email == "joncarlee@gmail.com");
             }
             if (!userManager.IsInRole(user.Id, "Admin"))
             {
                 userManager.AddToRole(user.Id, "Admin");
             }
+            if (!context.Users.Any(r => r.Email == "lreaves@coderfoundry.com"))
+            {
+                user = new ApplicationUser
+                {
+                    UserName = "lreaves@coderfoundry.com",
+                    Email = "lreaves@coderfoundry.com",
+                };
+                userManager.Create(user, "Password-1");
+            }
+            else
+            {
+                user = context.Users.Single(u => u.Email == "lreaves@coderfoundry.com");
+            }
+            if (!userManager.IsInRole(user.Id, "Moderator"))
+            {
+                userManager.AddToRole(user.Id, "Moderator");
+            }
+
 
             }
         }
