@@ -27,7 +27,7 @@
             <hr>
 
             <!-- Preview Image -->
-            <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+            <img class="img-responsive" src="Model.MediaURL" onerror="whoops(this)" style="max-height: 300px; min-width: 290px;">
 
             <hr>
 
@@ -154,6 +154,11 @@
         @Html.ActionLink("Back to List", "Index")
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
+    function whoops(image) {
+    image.onerror = "";
+    image.src = "http://i93.photobucket.com/albums/l77/afkimel/Misc/THERES-NOTHING-HERE-e1348677191662_zpse6d3406c.jpg"
+    return true;
+    }
     }
 
 

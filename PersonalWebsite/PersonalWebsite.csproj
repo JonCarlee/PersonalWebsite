@@ -552,6 +552,8 @@
     <Content Include="Views\Home\BugTracker.cshtml" />
     <Content Include="Views\Home\Resume.cshtml" />
     <Content Include="Views\Home\Other.cshtml" />
+    <None Include="Properties\PublishProfiles\jcarlee - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\jcarlee - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\jcarlee.pubxml" />
     <Content Include="Views\Posts\Create.cshtml" />
     <Content Include="Views\Posts\Delete.cshtml" />

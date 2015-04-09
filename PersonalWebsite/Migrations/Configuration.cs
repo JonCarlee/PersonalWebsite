@@ -33,7 +33,8 @@ namespace PersonalWebsite.Migrations
                 new UserStore<ApplicationUser>(context));
 
             ApplicationUser user;
-
+            
+            //Beginning of Adding Admin
             if (!context.Users.Any(r => r.Email == "joncarlee@gmail.com"))
             {
                 user = new ApplicationUser
@@ -54,6 +55,9 @@ namespace PersonalWebsite.Migrations
             {
                 userManager.AddToRole(user.Id, "Admin");
             }
+            //End of Adding Admin
+
+            //Beginning of Adding Moderator
             if (!context.Users.Any(r => r.Email == "lreaves@coderfoundry.com"))
             {
                 user = new ApplicationUser
@@ -71,7 +75,87 @@ namespace PersonalWebsite.Migrations
             {
                 userManager.AddToRole(user.Id, "Moderator");
             }
+            //End of Adding Moderator
 
+            //Beginning of Adding Moderator
+            if (!context.Users.Any(r => r.Email == "bdavis@coderfoundry.com"))
+            {
+                user = new ApplicationUser
+                {
+                    UserName = "bdavis@coderfoundry.com",
+                    Email = "bdavis@coderfoundry.com",
+                };
+                userManager.Create(user, "Password-1");
+            }
+            else
+            {
+                user = context.Users.Single(u => u.Email == "bdavis@coderfoundry.com");
+            }
+            if (!userManager.IsInRole(user.Id, "Moderator"))
+            {
+                userManager.AddToRole(user.Id, "Moderator");
+            }
+            //End of Adding Moderator
+
+            //Beginning of Adding Moderator
+            if (!context.Users.Any(r => r.Email == "ajensen@coderfoundry.com"))
+            {
+                user = new ApplicationUser
+                {
+                    UserName = "ajensen@coderfoundry.com",
+                    Email = "ajensen@coderfoundry.com",
+                };
+                userManager.Create(user, "Password-1");
+            }
+            else
+            {
+                user = context.Users.Single(u => u.Email == "ajensen@coderfoundry.com");
+            }
+            if (!userManager.IsInRole(user.Id, "Moderator"))
+            {
+                userManager.AddToRole(user.Id, "Moderator");
+            }
+            //End of Adding Moderator
+
+            //Beginning of Adding Moderator
+            if (!context.Users.Any(r => r.Email == "tjones@coderfoundry.com"))
+            {
+                user = new ApplicationUser
+                {
+                    UserName = "tjones@coderfoundry.com",
+                    Email = "tjones@coderfoundry.com",
+                };
+                userManager.Create(user, "Password-1");
+            }
+            else
+            {
+                user = context.Users.Single(u => u.Email == "tjones@coderfoundry.com");
+            }
+            if (!userManager.IsInRole(user.Id, "Moderator"))
+            {
+                userManager.AddToRole(user.Id, "Moderator");
+            }
+            //End of Adding Moderator
+
+            //Beginning of Adding Moderator
+            if (!context.Users.Any(r => r.Email == "tparrish@coderfoundry.com"))
+            {
+                user = new ApplicationUser
+                {
+                    UserName = "tparrish@coderfoundry.com",
+                    Email = "tparrish@coderfoundry.com",
+                };
+                userManager.Create(user, "Password-1");
+            }
+            else
+            {
+                user = context.Users.Single(u => u.Email == "tparrish@coderfoundry.com");
+            }
+            if (!userManager.IsInRole(user.Id, "Moderator"))
+            {
+                userManager.AddToRole(user.Id, "Moderator");
+            }
+            //End of Adding Moderator
 
             }
         }

@@ -82,7 +82,7 @@ namespace PersonalWebsite.Controllers
 
                     db.Posts.Add(post);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Edit");
                 }
             }
             return View(post);
