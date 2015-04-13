@@ -45,7 +45,7 @@ namespace PersonalWebsite.Migrations
                     LastName = "Carlee",
                     DisplayName = "Jon Carlee"
                 };
-                userManager.Create(user, "This is my page");
+                userManager.Create(user, "B1ahB1ahB1ah!");
             }
             else
             {
