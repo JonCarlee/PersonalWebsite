@@ -27,6 +27,18 @@ namespace PersonalWebsite.Controllers
             ViewBag.OnePageOfPosts = onePageOfPosts;
             return View();
         }
+
+        public ActionResult ManageUser()
+        {
+            var users = db.Users.ToList();
+            ViewBag.users = users;
+            return View();
+        }
+
+        public ActionResult Menu()
+        {
+            return View();
+        }
         // GET: Posts
         public ActionResult Admin()
         {
@@ -151,6 +163,31 @@ namespace PersonalWebsite.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Posts/Delete/5
+        public ActionResult DeleteUser(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = User.Identity.Name;
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Posts/Delete/5
+        [HttpPost, ActionName("DeleteUser")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Post post = db.Posts.Find(id);
+            db.Posts.Remove(post);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

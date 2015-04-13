@@ -573,6 +573,8 @@
     <Content Include="scripts\tinymce\langs\readme.md" />
     <Content Include="Views\Posts\Menu.cshtml" />
     <Content Include="Views\Posts\ManageUser.cshtml" />
+    <Content Include="Views\Posts\EditRole.cshtml" />
+    <Content Include="Views\Posts\DeleteUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
