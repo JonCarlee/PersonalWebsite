@@ -4,9 +4,9 @@
     ViewBag.Title = "Blog Entries Management";
 }
 <style>
-    #stupid{
-        height: 1.5em;
-        max-height: 1.5em;
+    #test{
+        height: 15px;
+        max-height: 15px;
         overflow: hidden;
     }
 </style>
@@ -52,7 +52,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        <td id="stupid">
+        <td id="test">
             @Html.DisplayFor(modelItem => item.Body)
         </td>
         <td>
@@ -75,7 +75,7 @@
 @section Scripts{
     <script>
     $(document).ready(function () {
-        $("#stupid").dotdotdot({
+        $("#test").dotdotdot({
             watch: "window"
         });
     });

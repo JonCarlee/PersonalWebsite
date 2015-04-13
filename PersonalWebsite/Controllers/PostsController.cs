@@ -170,7 +170,7 @@ namespace PersonalWebsite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser user = User.Identity.Name;
+            ApplicationUser user = null;
             if (user == null)
             {
                 return HttpNotFound();
@@ -178,16 +178,7 @@ namespace PersonalWebsite.Controllers
             return View(user);
         }
 
-        // POST: Posts/Delete/5
-        [HttpPost, ActionName("DeleteUser")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Post post = db.Posts.Find(id);
-            db.Posts.Remove(post);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

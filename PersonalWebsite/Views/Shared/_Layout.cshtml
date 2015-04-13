@@ -38,9 +38,17 @@
                  <span class="phone">
                      <i class="fa fa-phone-square"></i> Tel.: (336) 202-3371
                  </span>
-                 <a href="@Url.Action("Register", "Account")" class="pull-right"><i class="fa fa-arrow-circle-down"></i> Sign Up</a> 
-                 <a href="@Url.Action("Login", "Account")" class="pull-right"><i class="fa fa-sign-in"></i> Sign In</a>
-                 <a href="#" class="pull-right hidden" id="nav-search-close"><i class="fa fa-times"></i></a>
+                 @if (User.Identity.IsAuthenticated)
+                 {
+                     @Html.Partial("_LoginPartial")
+                 }
+                 else
+                 {
+                    <a href="@Url.Action("Register", "Account")" class="pull-right"><i class="fa fa-arrow-circle-down"></i> Sign Up</a>
+                    <a href="@Url.Action("Login", "Account")" class="pull-right"><i class="fa fa-sign-in"></i> Sign In</a>
+                    <a href="#" class="pull-right hidden" id="nav-search-close"><i class="fa fa-times"></i></a>
+                 }
+                 
              </div>
          </div>
      </div>
