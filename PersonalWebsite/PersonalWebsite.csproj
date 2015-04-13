@@ -571,6 +571,8 @@
     <Content Include="scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="scripts\tinymce\skins\lightgray\fonts\readme.md" />
     <Content Include="scripts\tinymce\langs\readme.md" />
+    <Content Include="Views\Posts\Menu.cshtml" />
+    <Content Include="Views\Posts\ManageUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

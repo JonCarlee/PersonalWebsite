@@ -22,7 +22,7 @@ namespace PersonalWebsite.Controllers
         {
             var posts = db.Posts.ToList();
             var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
-            var onePageOfPosts = posts.ToPagedList(pageNumber, 3); // will only contain 3 products max because of the pageSize
+            var onePageOfPosts = posts.OrderByDescending(p => p.Created).ToPagedList(pageNumber, 3); // will only contain 3 products max because of the pageSize
 
             ViewBag.OnePageOfPosts = onePageOfPosts;
             return View();

@@ -1,0 +1,55 @@
+﻿@model PersonalWebsite.Models.ApplicationUser 
+ @{ ViewBag.Title = "ManageUser"; }
+
+<h2>ManageUser</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th style="width: 400px;">
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DisplayName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td id="stupid">
+                @Html.DisplayFor(modelItem => item.Body)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediaURL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { slug = item.Slug }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
