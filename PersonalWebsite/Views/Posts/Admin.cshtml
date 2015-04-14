@@ -4,19 +4,20 @@
     ViewBag.Title = "Blog Entries Management";
 }
 <style>
-    #test{
-        height: 15px;
-        max-height: 15px;
-        overflow: hidden;
+    .test{
+        height: 15em;
+        max-height: 15em;
+        overflow: auto;
     }
 </style>
 <div class="col-sm-1"></div>
 <div class="col-sm-10">
 <h2 style="text-align: center">Blog Entries Management</h2>
-
-<div style="text-align: right">
+    <br />
+<div style="text-align: center">
     <a href="@Url.Action("Create")" class="btn btn-color">Create New</a>
 </div>
+    <br />
 <table class="table">
     <tr>
         <th>
@@ -31,7 +32,7 @@
         <th style="width: 400px;">
             @Html.DisplayNameFor(model => model.Body)
         </th>
-        <th>
+        <th style="width: 200px;">
             @Html.DisplayNameFor(model => model.MediaURL)
         </th>
         <th>
@@ -52,8 +53,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        <td id="test">
-            @Html.DisplayFor(modelItem => item.Body)
+        <td>
+            <div class="test">
+                @Html.DisplayFor(modelItem => item.Body)
+            </div>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MediaURL)
@@ -62,9 +65,9 @@
             @Html.DisplayFor(modelItem => item.Slug)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { slug = item.Slug }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            <a href="~/Posts/Edit/@item.Id" class="btn btn-color">Edit</a> |
+            <a href="~/Blog/@item.Slug" class="btn btn-color">Details</a> |
+            <a href="~/Posts/Delete/@item.Id" class="btn btn-danger" style="color: white">Delete</a>
         </td>
     </tr>
 }
@@ -75,7 +78,7 @@
 @section Scripts{
     <script>
     $(document).ready(function () {
-        $("#test").dotdotdot({
+        $(".test").dotdotdot({
             watch: "window"
         });
     });

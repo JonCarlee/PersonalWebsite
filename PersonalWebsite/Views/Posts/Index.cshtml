@@ -1,12 +1,12 @@
 ﻿@using PersonalWebsite.Models
 
-@model List<Post>
+@model PagedList<Post>
 @using PagedList;
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
 }
-<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <div class="container">
     <div class="row">
@@ -19,7 +19,7 @@
                 <small>  Now With Updates!</small>
             </h1>
 
-            @foreach (var post in ViewBag.onePageOfPosts)
+            @foreach (var post in Model)
             {
               <!-- First Blog Post -->
                 <h2>
@@ -42,7 +42,7 @@
                 -->
                 <hr>
             }
-            <!-- Pager -->
+            <!-- Pager 
             <ul class="pager">
                 <li class="previous">
                     <a href="#">← Older</a>
@@ -51,7 +51,7 @@
                     <a href="#">Newer →</a>
                 </li>
             </ul>
-
+            -->
         </div>
 
         <!-- Blog Sidebar Widgets Column -->
@@ -122,7 +122,10 @@
         </div>
 
     </div>
-    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfPosts, page => Url.Action("Index", new { page }))
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
 
 </div>
 @section Scripts{

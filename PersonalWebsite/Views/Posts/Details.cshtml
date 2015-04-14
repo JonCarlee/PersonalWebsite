@@ -134,7 +134,17 @@
 
     </div>
     <!-- /.row -->
+    <div class="row" style="text-align: center">
+        <div class="col-sm-8">
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="~/Posts/Edit/@Model.Id" class="btn btn-color">Edit</a>
+                <a href="~/Posts/Admin" class="btn btn-color">Back To Post Manager</a>
+            }
 
+            <a href="~/Posts" class="btn btn-color">Back To List</a>
+        </div>
+    </div>
     <hr>
 
     <!-- Footer -->
@@ -143,7 +153,7 @@
             <div class="col-lg-12">
                 <p>Copyright © Jon Carlee 2015</p>
             </div>
-        </div>`
+        </div>
         <!-- /.row -->
     </footer>
     <p>
@@ -151,11 +161,7 @@
     </p>
 </div>
 
-@if (User.IsInRole("Admin"))
-{
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-}
-@Html.ActionLink("Back to List", "Index")
+
 @section Scripts {
 
     @Scripts.Render("~/bundles/jqueryval")

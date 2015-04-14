@@ -20,12 +20,13 @@ namespace PersonalWebsite.Controllers
         [AllowAnonymous]
         public ActionResult Index(int? page)
         {
-            var posts = db.Posts.ToList();
+            var posts = db.Posts.OrderByDescending(p => p.Created).ToList();
+            var pageSize = 3;
             var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
-            var onePageOfPosts = posts.OrderByDescending(p => p.Created).ToPagedList(pageNumber, 3); // will only contain 3 products max because of the pageSize
-
-            ViewBag.OnePageOfPosts = onePageOfPosts;
-            return View();
+            //var onePageOfPosts = posts.OrderByDescending(p => p.Created).ToPagedList(pageNumber, 3); // will only contain 3 products max because of the pageSize
+            
+            // ViewBag.OnePageOfPosts = onePageOfPosts;
+            return View(posts.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult ManageUser()
@@ -160,7 +161,7 @@ namespace PersonalWebsite.Controllers
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Admin");
         }
 
         // GET: Posts/Delete/5

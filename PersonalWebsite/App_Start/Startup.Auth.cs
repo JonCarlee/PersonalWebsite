@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using PersonalWebsite.Models;
+using System.Security.Claims;
 
 namespace PersonalWebsite
 {
@@ -60,8 +61,16 @@ namespace PersonalWebsite
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "600619718520-dreve4saroar8rf063ronrqu1nq31nd0.apps.googleusercontent.com",
-                ClientSecret = "KGLkUQVGMt0T4W-FR1-x5J55"
+                ClientId = "600619718520-0qu02t2ricthmbnd98stkkdjtt79jo1e.apps.googleusercontent.com",
+                ClientSecret = "PM0dVaUp1aV762EIl22UAiVt",
+                SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
+                Provider = new GoogleOAuth2AuthenticationProvider()
+                {
+                    OnAuthenticated = async ctx =>
+                    {
+                        ctx.Identity.AddClaim(new Claim("urn:tokens:googleplus:accesstoken", ctx.AccessToken));
+                    }
+                }
             });
         }
     }
