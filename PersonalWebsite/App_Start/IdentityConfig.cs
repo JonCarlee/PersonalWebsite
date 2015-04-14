@@ -11,6 +11,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using PersonalWebsite.Models;
+using System;
+using System.Net;
+using System.Net.Mail;
+using SendGrid;
+using System.Configuration;
 
 namespace PersonalWebsite
 {
@@ -19,6 +24,25 @@ namespace PersonalWebsite
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+            var username = ConfigurationManager.AppSettings["SendGridUserName"];
+            var password = ConfigurationManager.AppSettings["SendGridPassword"];
+            var from = ConfigurationManager.AppSettings["ContactEmail"];
+            // Create the email object first, then add the properties.
+            SendGridMessage myMessage = new SendGridMessage();
+            myMessage.AddTo(message.Destination);
+            myMessage.From = new MailAddress(from);
+            myMessage.Subject = message.Subject;
+            myMessage.Text = message.Body;
+            myMessage.Html = message.Body;
+
+            // Create credentials, specifying your user name and password.
+            var credentials = new NetworkCredential(username, password);
+
+            // Create an Web transport for sending email.
+            var transportWeb = new Web(credentials);
+
+            // Send the email.
+            transportWeb.Deliver(myMessage);
             return Task.FromResult(0);
         }
     }
