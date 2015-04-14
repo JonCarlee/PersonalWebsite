@@ -101,7 +101,20 @@ namespace PersonalWebsite.Controllers
             return View(post);
         }
 
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details(Comment comment, int postId)
+        {
+            if (comment.Author == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            Post post = db.Posts.Find(postId);
+            post.Comments.Add(comment);
+            db.Entry(post).State = EntityState.Modified;
+            db.SaveChanges();
+            return View(post);
+        }
         // GET: Posts/Edit/5
         public ActionResult Edit(int? id)
         {
