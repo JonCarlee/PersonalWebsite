@@ -38,24 +38,22 @@
             <hr>
 
             <!-- Blog Comments -->
-            <!--    <form method="post">
-        <label>Player Name: </label><input type="text" name="Name"/>
-                <input type="hidden" value="@Model.Id" />
-                -->
+
             <!-- Comments Form -->
             <div class="well">
                 <h4>Leave a Comment:</h4>
-                <form role="form" method="post">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="postId" value="@Model.Id" />
-                    <input type="hidden" name="authorId" value="@User.Identity.GetUserId()" />
-                    <input type="hidden" name="author" value="@User.Identity.Name" />
-                    <div class="form-group">
-                        <textarea class="form-control" name="body" rows="3"></textarea>
-                    </div>
+                <div>
+                    <form role="form" action="/Posts/AddComment" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="PostId" value="@Model.Id" />
+                        @Html.HiddenFor(m => m.Slug)
+                        <div class="form-group">
+                            <textarea class="form-control" name="body" rows="3"></textarea>
+                        </div>
 
-                    <button type="submit" class="btn btn-color">Submit</button>
-                </form>
+                        <button type="submit" class="btn btn-color">Submit</button>
+                    </form>
+                </div>
             </div>
 
             <hr>
@@ -64,6 +62,7 @@
             <!-- Comment -->
             @foreach (var comment in Model.Comments)
             {
+                
                 <div class="media">
                     <a class="pull-left" href="#">
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
@@ -74,7 +73,24 @@
                             <small>@comment.Created.DateTime.ToShortDateString()</small>
                         </h4>
                         @comment.Body
-                    </div>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                        {
+                            <br />
+                            <br />
+                            <br />
+                            
+                        <form method="post">
+                            @Html.AntiForgeryToken()
+                                <input type="hidden" name="Id" value="@comment.Id" />
+                                <input type="hidden" name="PostId" value="@Model.Id" />
+                               
+                                <a href="@Url.Action("Edit", "Comment", new { id = comment.Id})" class="btn btn-color">Edit Post</a>
+                                <a href="~/Posts/DeleteComment/@comment.Id" class="btn btn-danger" style="color: white">Delete</a>
+</form>
+                            }
+                        <br />
+                        <br />
+</div>
                 </div>
             }
         </div>
@@ -155,20 +171,9 @@
             <a href="~/Posts" class="btn btn-color">Back To List</a>
         </div>
     </div>
-    <hr>
 
     <!-- Footer -->
-    <footer>
-        <div class="row">
-            <div class="col-lg-12">
-                <p>Copyright © Jon Carlee 2015</p>
-            </div>
-        </div>
-        <!-- /.row -->
-    </footer>
-    <p>
 
-    </p>
 </div>
 
 

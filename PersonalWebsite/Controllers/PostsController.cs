@@ -9,15 +9,14 @@ using System.Web.Mvc;
 using PersonalWebsite.Models;
 using PagedList;
 using PagedList.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace PersonalWebsite.Controllers
 {
-    [Authorize(Roles="Admin")]
     public class PostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        [AllowAnonymous]
         public ActionResult Index(int? page)
         {
             var posts = db.Posts.OrderByDescending(p => p.Created).ToList();
@@ -28,26 +27,26 @@ namespace PersonalWebsite.Controllers
             // ViewBag.OnePageOfPosts = onePageOfPosts;
             return View(posts.ToPagedList(pageNumber, pageSize));
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult ManageUser()
         {
             var users = db.Users.ToList();
             ViewBag.users = users;
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Menu()
         {
             return View();
         }
         // GET: Posts
+        [Authorize(Roles="Admin")]
         public ActionResult Admin()
         {
             return View(db.Posts.ToList());
         }
 
         // GET: Posts/Details/5
-        [AllowAnonymous]
         public ActionResult Details(string Slug)
         {
             if (String.IsNullOrWhiteSpace(Slug))
@@ -62,7 +61,21 @@ namespace PersonalWebsite.Controllers
             return View(post);
         }
 
+        //POST
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddComment(Comment comment, string slug)
+        {
+            comment.Created = System.DateTimeOffset.Now;
+            comment.AuthorId = User.Identity.GetUserId();
+            db.Comments.Add(comment);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { slug = slug });
+        }
+
         // GET: Posts/Create
+        [Authorize(Roles="Admin")]
         public ActionResult Create()
         {
             return View();
@@ -72,6 +85,7 @@ namespace PersonalWebsite.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Created,Body,Title,Published, MediaURL")] Post post, HttpPostedFileBase image)
         {
@@ -95,27 +109,15 @@ namespace PersonalWebsite.Controllers
 
                     db.Posts.Add(post);
                     db.SaveChanges();
-                    return RedirectToAction("Admin");
+                    return RedirectToAction("Details", new { slug = post.Slug });
                 }
             }
             return View(post);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Details(Comment comment, int postId)
-        {
-            if (comment.Author == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            Post post = db.Posts.Find(postId);
-            post.Comments.Add(comment);
-            db.Entry(post).State = EntityState.Modified;
-            db.SaveChanges();
-            return View(post);
-        }
+
         // GET: Posts/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -134,6 +136,7 @@ namespace PersonalWebsite.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Updated,Title,Body,MediaURL")] Post post)
         {
@@ -148,10 +151,11 @@ namespace PersonalWebsite.Controllers
                 db.SaveChanges();
                 
             }
-            return RedirectToAction("Admin");
+            return RedirectToAction("Details", new { slug = post.Slug });
         }
 
         // GET: Posts/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -167,6 +171,7 @@ namespace PersonalWebsite.Controllers
         }
 
         // POST: Posts/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -176,8 +181,33 @@ namespace PersonalWebsite.Controllers
             db.SaveChanges();
             return RedirectToAction("Admin");
         }
+ 
+        [Authorize(Roles = "Admin,Moderator")]
+        public ActionResult DeleteComment(int? id)
+        {
+            var comment = db.Comments.Find(id);
+            if (comment == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(comment);
+        }
+        
+        
+        [Authorize(Roles = "Admin,Moderator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteComment(int commentId)
+        {
+            Comment comment = db.Comments.Find(commentId);
+            Post post = db.Posts.Find(comment.PostId);
+            db.Comments.Remove(comment);
+            db.SaveChanges();
+            return RedirectToAction("Details", "Posts", new { slug = post.Slug });
+        }
 
         // GET: Posts/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteUser(int? id)
         {
             if (id == null)

@@ -81,7 +81,7 @@ namespace PersonalWebsite.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (model.Password == "Password-1")
+                   /* if (model.Password == "Password-1")
                     {
 
                         //UserManager.RemovePassword(User.Identity.GetUserId());
@@ -90,9 +90,8 @@ namespace PersonalWebsite.Controllers
                         return RedirectToAction("ChangePassword", "Manage");
                     }
                     else
-                    {
+                    { }*/
                         return RedirectToAction("Index", "Posts");
-                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

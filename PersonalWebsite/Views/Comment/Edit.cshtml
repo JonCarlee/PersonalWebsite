@@ -1,0 +1,21 @@
+﻿@model PersonalWebsite.Models.Comment
+@using Microsoft.AspNet.Identity;
+@{
+
+}
+<div class="container">
+    <h2>Edit</h2>
+
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="postId" value="@Model.PostId" />
+        <input type="hidden" name="authorId" value="@Model.AuthorId" />
+        <input type="hidden" name="created" value="@Model.Created" />
+        <textarea class="form-control" name="body" rows="3">@Model.Body</textarea>
+
+        <button type="submit" class="btn btn-color">Submit</button>
+    </form>
+
+</div>
+
+
