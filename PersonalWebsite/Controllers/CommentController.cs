@@ -41,13 +41,20 @@ namespace PersonalWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Created,Id,Updated,AuthorId,Body,PostId")] Comment comment)
         {
+            //If user didn't mess up
             if (ModelState.IsValid)
             {
+                //Find the post that this comment is a part of based on the PostId tag
                 Post post = db.Posts.Find(comment.PostId);
+                //Put comment on the graph
                 db.Comments.Attach(comment);
+                //Change the updated tag time to current time
                 comment.Updated = System.DateTimeOffset.Now;
+                //Let the Database know the data has changed
                 db.Entry(comment).State = EntityState.Modified;
+                //Save the Changes
                 db.SaveChanges();
+                //Go back to the Details page, which is handled by the Posts controller, and find the page based on the post slug
                 return RedirectToAction("Details", "Posts", new { slug = post.Slug });
             }
             return View(comment);

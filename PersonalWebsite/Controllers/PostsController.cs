@@ -58,6 +58,7 @@ namespace PersonalWebsite.Controllers
             {
                 return HttpNotFound();
             }
+            post.Comments = db.Comments.OrderByDescending(p => p.Created).ToList();
             return View(post);
         }
 
@@ -138,7 +139,7 @@ namespace PersonalWebsite.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Updated,Title,Body,MediaURL")] Post post)
+        public ActionResult Edit([Bind(Include = "Id,Updated,Title,Body,MediaURL,Slug")] Post post)
         {
             if (ModelState.IsValid)
             {
@@ -146,12 +147,21 @@ namespace PersonalWebsite.Controllers
                 post.Updated = System.DateTimeOffset.Now;
 
                 db.Entry(post).Property(p => p.Body).IsModified = true;
-                db.Entry(post).Property(p => p.MediaURL).IsModified = true;
-                db.Entry(post).Property(p => p.Updated).IsModified = true;
                 db.SaveChanges();
                 
             }
-            return RedirectToAction("Details", new { slug = post.Slug });
+            return RedirectToAction("Admin");
+        }
+
+        [HttpPost]
+        public ActionResult Search(string keyword)
+        {
+            var result = db.Posts.Where(p => p.Title.Contains(keyword))
+                .Union(db.Posts.Where(p => p.Body.Contains(keyword)))
+                .Union(db.Posts.Where(p => p.Slug.Contains(keyword)))
+                .Union(db.Posts.Where(p => p.Comments.Any(c => c.Body.Contains(keyword)))).OrderByDescending(p => p.Created).ToPagedList(1 , 3);
+
+            return View(result);
         }
 
         // GET: Posts/Delete/5

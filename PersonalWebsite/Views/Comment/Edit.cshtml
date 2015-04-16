@@ -12,8 +12,10 @@
         <input type="hidden" name="authorId" value="@Model.AuthorId" />
         <input type="hidden" name="created" value="@Model.Created" />
         <textarea class="form-control" name="body" rows="3">@Model.Body</textarea>
-
+        <br />
         <button type="submit" class="btn btn-color">Submit</button>
+        <!--Find the Post this Comment is attached to and load the slug of the post into the url-->
+        <a href="~/Blog/@Model.Post.Slug" class="btn btn-color">Go Back</a>
     </form>
 
 </div>

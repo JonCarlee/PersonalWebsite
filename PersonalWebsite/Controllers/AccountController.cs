@@ -388,6 +388,14 @@ namespace PersonalWebsite.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    var user = new ApplicationUser { Email = loginInfo.Email, UserName = loginInfo.Email, DisplayName = loginInfo.DefaultUserName };
+                    UserManager.Create(user);
+                    var r = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                    if (r.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        return RedirectToLocal(returnUrl);
+                    }
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
           
