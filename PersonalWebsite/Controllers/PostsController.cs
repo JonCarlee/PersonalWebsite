@@ -147,10 +147,11 @@ namespace PersonalWebsite.Controllers
                 post.Updated = System.DateTimeOffset.Now;
 
                 db.Entry(post).Property(p => p.Body).IsModified = true;
+                db.Entry(post).Property(p => p.MediaURL).IsModified = true;
                 db.SaveChanges();
                 
             }
-            return RedirectToAction("Admin");
+            return RedirectToAction("Details", new { slug = post.Slug });
         }
 
         [HttpPost]

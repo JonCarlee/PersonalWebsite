@@ -11,89 +11,91 @@
         <!-- Blog Post Content Column -->
         <div class="col-lg-8">
 
-            <!-- Blog Post -->
-            <!-- Title -->
-            <h1>@Model.Title</h1>
+    <!-- Blog Post -->
+    <!-- Title -->
+    <h1>@Model.Title</h1>
 
-            <!-- Author -->
-            <p class="lead">
-                by <a href="#">Jon Carlee</a>
-            </p>
+    <!-- Author -->
+    <p class="lead">
+        by <a href="#">Jon Carlee</a>
+    </p>
 
-            <hr>
+    <hr>
 
-            <!-- Date/Time -->
-            <p><span class="glyphicon glyphicon-time"></span>@Model.Created.DateTime.ToLongDateString()</p>
+    <!-- Date/Time -->
+    <p><span class="glyphicon glyphicon-time"></span>@Model.Created.DateTime.ToLongDateString()</p>
 
-            <hr>
+    <hr>
 
-            <!-- Preview Image -->
-            <img class="img-responsive" src="@Model.MediaURL" onerror="whoops(this)" style="max-height: 300px; min-width: 290px;">
+    <!-- Preview Image -->
+    <img class="img-responsive" src="@Model.MediaURL" onerror="whoops(this)" style="max-height: 300px; min-width: 290px;">
 
-            <hr>
+    <hr>
 
-            <!-- Post Content -->
-            <p class="lead"></p>
-            <p>@Html.Raw(Model.Body)</p>
-            <hr>
+    <!-- Post Content -->
+    <p class="lead"></p>
+    <p>@Html.Raw(Model.Body)</p>
+    <hr>
 
-            <!-- Blog Comments -->
-
-            <!-- Comments Form -->
-            <div class="well">
-                <h4>Leave a Comment:</h4>
-                <div>
-                    <form role="form" action="/Posts/AddComment" method="post">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="PostId" value="@Model.Id" />
-                        @Html.HiddenFor(m => m.Slug)
-                        <div class="form-group">
-                            <textarea class="form-control" name="body" rows="3"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-color">Submit</button>
-                    </form>
+    <!-- Blog Comments -->
+    <!-- Comments Form -->
+    <div class="well">
+        <h4>Leave a Comment:</h4>
+        <div>
+            <form role="form" action="/Posts/AddComment" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="PostId" value="@Model.Id" />
+                @Html.HiddenFor(m => m.Slug)
+                <div class="form-group">
+                    <textarea class="form-control" name="body" rows="3"></textarea>
                 </div>
-            </div>
 
-            <hr>
-
-            <!-- Posted Comments -->
-            <!-- Comment -->
-            @foreach (var comment in Model.Comments)
-            {
-                
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">
-                            @comment.Author.DisplayName
-                            <small>@comment.Created.DateTime.ToShortDateString()</small>
-                        </h4>
-                        @comment.Body
-                        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
-                        {
-                            <br />
-                            <br />
-                            <br />
-                            
-                        <form method="post">
-                            @Html.AntiForgeryToken()
-                                <input type="hidden" name="Id" value="@comment.Id" />
-                                <input type="hidden" name="PostId" value="@Model.Id" />
-                               
-                                <a href="@Url.Action("Edit", "Comment", new { id = comment.Id})" class="btn btn-color">Edit Post</a>
-                                <a href="~/Posts/DeleteComment/@comment.Id" class="btn btn-danger" style="color: white">Delete</a>
-</form>
-                            }
-                        <br />
-                        <br />
-</div>
-                </div>
-            }
+                <button type="submit" class="btn btn-color">Submit</button>
+            </form>
         </div>
+    </div>
+
+    <hr>
+
+    <!-- Posted Comments -->
+    <!-- Comment -->
+    @foreach (var comment in Model.Comments)
+            {
+                if (comment.PostId == Model.Id)
+                {
+                    <div class="media">
+                        <a class="pull-left" href="#">
+                            <img class="media-object" src="http://placehold.it/64x64" alt="">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                @comment.Author.DisplayName
+                                <small>@comment.Created.DateTime.ToShortDateString()</small>
+                            </h4>
+                            @comment.Body
+                            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                        {
+                                <br />
+                                <br />
+                                <br />
+
+                                <form method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Id" value="@comment.Id" />
+                                    <input type="hidden" name="PostId" value="@Model.Id" />
+
+                                    <a href="@Url.Action("Edit", "Comment", new { id = comment.Id})" class="btn btn-color">Edit Post</a>
+                                    <a href="~/Posts/DeleteComment/@comment.Id" class="btn btn-danger" style="color: white">Delete</a>
+                                </form>
+                }
+
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+            }
+            }
+            </div>
         <!-- Blog Sidebar Widgets Column -->
         <div class="col-md-4">
             <!-- Blog Search Well -->

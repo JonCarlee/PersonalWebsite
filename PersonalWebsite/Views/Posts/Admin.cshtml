@@ -29,10 +29,10 @@
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th style="width: 400px;">
+        <th style="width: 400px; max-width: 400px;">
             @Html.DisplayNameFor(model => model.Body)
         </th>
-        <th style="width: 200px;">
+        <th style="width: 100px; max-width: 150px;">
             @Html.DisplayNameFor(model => model.MediaURL)
         </th>
         <th>
@@ -59,7 +59,9 @@
             </div>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MediaURL)
+            <div class="test2" style="max-width: 250px;">
+                @Html.DisplayFor(modelItem => item.MediaURL)
+            </div>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Slug)
@@ -79,6 +81,11 @@
     <script>
     $(document).ready(function () {
         $(".test").dotdotdot({
+            watch: "window"
+        });
+    });
+    $(document).ready(function () {
+        $(".test2").dotdotdot({
             watch: "window"
         });
     });
