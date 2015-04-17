@@ -20,22 +20,22 @@
     <br />
 <table class="table">
     <tr>
-        <th>
+        <th style="width: 225px; max-width: 225px;text-align: center">
             @Html.DisplayNameFor(model => model.Created)
         </th>
-        <th>
+        <th style="width: 225px; max-width: 225px;text-align: center">
             @Html.DisplayNameFor(model => model.Updated)
         </th>
-        <th>
+        <th style="width: 180px; max-width: 180px;text-align: center">
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th style="width: 400px; max-width: 400px;">
+        <th style="width: 290px; max-width: 290px;text-align: center">
             @Html.DisplayNameFor(model => model.Body)
         </th>
-        <th style="width: 100px; max-width: 150px;">
+        <th style="width: 180px; max-width: 180px;text-align: center">
             @Html.DisplayNameFor(model => model.MediaURL)
         </th>
-        <th>
+        <th style="width: 200px; max-width: 200px;text-align: center">
             @Html.DisplayNameFor(model => model.Slug)
         </th>
         <th></th>
@@ -50,7 +50,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Updated)
         </td>
-        <td>
+        <td style ="text-align: center">
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
@@ -59,11 +59,11 @@
             </div>
         </td>
         <td>
-            <div class="test2" style="max-width: 250px;">
+            <div class="test2" style="max-width: 180px;">
                 @Html.DisplayFor(modelItem => item.MediaURL)
             </div>
         </td>
-        <td>
+        <td style="text-align: center">
             @Html.DisplayFor(modelItem => item.Slug)
         </td>
         <td>

@@ -1,4 +1,4 @@
-﻿@model PersonalWebsite.Models.ApplicationUser
+﻿@model List<PersonalWebsite.Models.ApplicationUser>
  @{ ViewBag.Title = "ManageUser"; }
 
 
@@ -24,7 +24,7 @@
             <th>Roles</th>
         </tr>
 
-        @foreach (var item in ViewBag.users)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -43,7 +43,10 @@
                     @Html.Raw(item.DisplayName)
                 </td>
                 <td>
-                    @Html.Raw(item.Roles)
+                    @foreach (var role in item.Roles)
+                    {
+                        role.
+                    }
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "EditRole", new { id = item.Id })

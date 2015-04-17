@@ -11,29 +11,77 @@ using PagedList;
 using PagedList.Mvc;
 using Microsoft.AspNet.Identity;
 
+
 namespace PersonalWebsite.Controllers
 {
     public class PostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserRolesHelper helper = new UserRolesHelper();
 
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string keyword)
         {
-            var posts = db.Posts.OrderByDescending(p => p.Created).ToList();
+            var oldkeyword = TempData["Keyword"] as string;
             var pageSize = 3;
-            var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
-            //var onePageOfPosts = posts.OrderByDescending(p => p.Created).ToPagedList(pageNumber, 3); // will only contain 3 products max because of the pageSize
-            
-            // ViewBag.OnePageOfPosts = onePageOfPosts;
-            return View(posts.ToPagedList(pageNumber, pageSize));
+            var pageNumber = page ?? 1;
+            //If no search has been made yet and no search is specified, return the whole list of posts
+            if (oldkeyword == null)
+            {
+                if (keyword == null)
+                {
+                    var posts = db.Posts.OrderByDescending(p => p.Created).ToList();
+                    return View(posts.ToPagedList(pageNumber, pageSize));
+                }  
+            }
+            //If a new search has been specified, put the page back to the first page and change the search term
+            if (keyword != null)
+            {
+                oldkeyword = keyword;
+                pageNumber = 1;
+            }
+            //Find either the new search or continue the old search
+            var result = db.Posts.Where(p => p.Title.Contains(oldkeyword))
+                .Union(db.Posts.Where(p => p.Body.Contains(oldkeyword)))
+                .Union(db.Posts.Where(p => p.Slug.Contains(oldkeyword)))
+                .Union(db.Posts.Where(p => p.Comments.Any(c => c.Body.Contains(oldkeyword))))
+                .Union(db.Posts.Where(p => p.Comments.Any(c => c.Author.DisplayName.Contains(oldkeyword)))).OrderByDescending(p => p.Created).ToPagedList(pageNumber, pageSize);
+            //Store the keyword for the next call
+            TempData["Keyword"] = oldkeyword;
+            return View(result);
         }
+
+        public ActionResult Clear()
+        {
+            TempData["Keyword"] = null;
+            return RedirectToAction("Index");
+        }
+        /*
         [Authorize(Roles = "Admin")]
         public ActionResult ManageUser()
         {
+            /*
+            var users = new UserRolesViewModel();
+            users.Users = db.Users.ToList();
+            foreach(item in users.Users){
+            
             var users = db.Users.ToList();
-            ViewBag.users = users;
+            var roles = [];
+            for(int i = 0; i > users.Count; i++){
+            roles +=  db.Roles.find
+            }
+            }
+            db.Roles.Find()
+            return View(users);
+        }
+*/
+        [Authorize(Roles = "Admin")]
+        public ActionResult ChangeRole(int id)
+        {
+            var user = db.Users.Find(id);
+            var model = new UserRolesViewModel();
             return View();
         }
+
         [Authorize(Roles = "Admin")]
         public ActionResult Menu()
         {
@@ -88,7 +136,7 @@ namespace PersonalWebsite.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Created,Body,Title,Published, MediaURL")] Post post, HttpPostedFileBase image)
+        public ActionResult Create([Bind(Include = "Created,Body,Title,MediaURL")] Post post, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -154,16 +202,6 @@ namespace PersonalWebsite.Controllers
             return RedirectToAction("Details", new { slug = post.Slug });
         }
 
-        [HttpPost]
-        public ActionResult Search(string keyword)
-        {
-            var result = db.Posts.Where(p => p.Title.Contains(keyword))
-                .Union(db.Posts.Where(p => p.Body.Contains(keyword)))
-                .Union(db.Posts.Where(p => p.Slug.Contains(keyword)))
-                .Union(db.Posts.Where(p => p.Comments.Any(c => c.Body.Contains(keyword)))).OrderByDescending(p => p.Created).ToPagedList(1 , 3);
-
-            return View(result);
-        }
 
         // GET: Posts/Delete/5
         [Authorize(Roles = "Admin")]

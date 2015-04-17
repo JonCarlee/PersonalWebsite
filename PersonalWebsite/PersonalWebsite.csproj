@@ -202,6 +202,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\StringUtilities.cs" />
+    <Compile Include="Models\UserRolesHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -629,7 +630,6 @@
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Comment\Edit.cshtml" />
     <Content Include="Views\Posts\DeleteComment.cshtml" />
-    <Content Include="Views\Posts\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
