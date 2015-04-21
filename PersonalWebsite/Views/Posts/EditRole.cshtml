@@ -1,7 +1,24 @@
-﻿
+﻿@model PersonalWebsite.Models.UserRolesViewModel
 @{
     ViewBag.Title = "EditRole";
 }
-
-<h2>EditRole</h2>
-
+<div class="container">
+    <h2>EditRole</h2>
+    <h4>Username: @Model.user.Email</h4>
+    <h4>Current Role: @if(Model.roleName == null){
+                          @: None
+                      }
+                      else{
+                          @Model.roleName;  
+                      }</h4>
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="oldrole" value="@Model.roleName" />
+        <select name="newRole">
+            <option value="null">None</option>
+            <option value="Moderator">Moderator</option>
+            <option value="Admin">Admin</option>
+        </select>
+        <input type="submit" class="btn btn-color" value="Change Role" />
+    </form>
+</div>

@@ -10,9 +10,8 @@ namespace PersonalWebsite.Models
     // GET: Helper
     public class UserRolesViewModel
     {
-        string roleId;
-        string roleName;
-        List<ApplicationUser> Users;
+        public string roleName { get; set; }
+        public ApplicationUser user { get; set; }
     }
 
     public class UserRolesHelper

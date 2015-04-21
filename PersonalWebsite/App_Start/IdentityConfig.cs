@@ -11,7 +11,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using PersonalWebsite.Models;
-using System;
 using System.Net;
 using System.Net.Mail;
 using SendGrid;

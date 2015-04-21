@@ -28,32 +28,36 @@
     <hr>
 
     <!-- Preview Image -->
-    <img class="img-responsive" src="@Model.MediaURL" onerror="whoops(this)" style="max-height: 300px; min-width: 290px;">
+            <img class="img-responsive" src="@Model.MediaURL" onerror="whoops(this)" style="max-height: 300px; min-width: 625px;">
 
     <hr>
 
     <!-- Post Content -->
-    <p class="lead"></p>
+    <p class=" lead"></p>
     <p>@Html.Raw(Model.Body)</p>
     <hr>
 
     <!-- Blog Comments -->
     <!-- Comments Form -->
-    <div class="well">
-        <h4>Leave a Comment:</h4>
-        <div>
-            <form role="form" action="/Posts/AddComment" method="post">
-                @Html.AntiForgeryToken()
-                <input type="hidden" name="PostId" value="@Model.Id" />
-                @Html.HiddenFor(m => m.Slug)
-                <div class="form-group">
-                    <textarea class="form-control" name="body" rows="3"></textarea>
-                </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="well">
+                    <h4>Leave a Comment:</h4>
+                    <div>
+                        <form role="form" action="/Posts/AddComment" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="PostId" value="@Model.Id" />
+                            @Html.HiddenFor(m => m.Slug)
+                            <div class="form-group">
+                                <textarea class="form-control" name="body" rows="3"></textarea>
+                            </div>
 
-                <button type="submit" class="btn btn-color">Submit</button>
-            </form>
-        </div>
-    </div>
+                            <button type="submit" class="btn btn-color">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            }
+    
 
     <hr>
 
@@ -73,18 +77,17 @@
                                 <small>@comment.Created.DateTime.ToShortDateString()</small>
                             </h4>
                             @comment.Body
-                            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                            @if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.Identity.GetUserId() == comment.AuthorId)
                         {
                                 <br />
                                 <br />
                                 <br />
 
                                 <form method="post">
-                                    @Html.AntiForgeryToken()
                                     <input type="hidden" name="Id" value="@comment.Id" />
                                     <input type="hidden" name="PostId" value="@Model.Id" />
 
-                                    <a href="@Url.Action("Edit", "Comment", new { id = comment.Id})" class="btn btn-color">Edit Post</a>
+                                    <a href="@Url.Action("Edit", "Comment", new { id = comment.Id})" class="btn btn-color">Edit Comment</a>
                                     <a href="~/Posts/DeleteComment/@comment.Id" class="btn btn-danger" style="color: white">Delete</a>
                                 </form>
                 }
@@ -101,16 +104,16 @@
             <!-- Blog Search Well -->
             <div class="well">
                 <h4>Blog Search</h4>
-                <div class="input-group">
-                    <form role="form" action="/Posts/Search" method="post">
-                        <input type="text" class="form-control">
+                <form role="form" action="/Posts/Index" method="get">
+                    <div class="input-group">
+                        <input type="text" name="keyword" class="form-control">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
-                    </form>
-</div>
+                    </div>
+                </form>
                 <!-- /.input-group -->
             </div>
 
@@ -121,7 +124,7 @@
                     <div class="col-lg-6">
                         <ul class="list-unstyled">
                             <li>
-                                <a href="#">A Thing</a>
+                                <a href="#">Blogs During Coder Foundry</a>
                             </li>
                             <li>
                                 <a href="#">Another Thing</a>
@@ -134,6 +137,7 @@
                             </li>
                         </ul>
                     </div>
+                    <!-- /.col-lg-6 -->
                     <div class="col-lg-6">
                         <ul class="list-unstyled">
                             <li>
@@ -146,18 +150,23 @@
                                 <a href="#">Wanna Be a Thing</a>
                             </li>
                             <li>
-                                <a href="#">[Insert A Thing Here]</a>
+                                <a href="#">[Insert a Thing Here]</a>
                             </li>
                         </ul>
                     </div>
+                    <!-- /.col-lg-6 -->
                 </div>
                 <!-- /.row -->
             </div>
 
             <!-- Side Widget Well -->
             <div class="well">
-                <h4>An Unnamed Thing</h4>
-                <p>So yeah!  Side Widget Well.  Cool. (?????)  Maybe one day I'll figure out what should go here?</p>
+                <h4>Why Is This Blog A Thing?</h4>
+                <p>
+                    At first, the blog was one of our assignments at Coder Foundry.  After I got it working, I wanted to do more improvements
+                    and wanted to treat it more like my own website as opposed to just an assignment to complete before moving on to the next
+                    one.  I'll try to update it at least once a week.
+                </p>
             </div>
 
         </div>

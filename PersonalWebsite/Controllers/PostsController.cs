@@ -55,31 +55,52 @@ namespace PersonalWebsite.Controllers
             TempData["Keyword"] = null;
             return RedirectToAction("Index");
         }
-        /*
+        
         [Authorize(Roles = "Admin")]
         public ActionResult ManageUser()
         {
-            /*
-            var users = new UserRolesViewModel();
-            users.Users = db.Users.ToList();
-            foreach(item in users.Users){
             
             var users = db.Users.ToList();
-            var roles = [];
-            for(int i = 0; i > users.Count; i++){
-            roles +=  db.Roles.find
-            }
-            }
-            db.Roles.Find()
+            var roles = db.Roles.ToList();
+
+            ViewBag.Roles = roles;
             return View(users);
         }
-*/
+
         [Authorize(Roles = "Admin")]
-        public ActionResult ChangeRole(int id)
+        public ActionResult EditRole(string id)
         {
             var user = db.Users.Find(id);
+            var curr = user.Roles.ToList();
+            var allRoles = db.Roles.ToList();
             var model = new UserRolesViewModel();
-            return View();
+            model.user = user;
+            foreach (var role in allRoles)
+            {
+                foreach (var userrole in curr)
+                {
+                    if (userrole.RoleId == role.Id)
+                        model.roleName = role.Name;
+                }
+            }
+            
+            
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditRole(string id, string newRole, string oldRole)
+        {
+            var user = db.Users.Find(id);
+            if (oldRole != "")
+            {
+                helper.RemoveUserFromRole(id, oldRole);
+            }
+            if (newRole != "null")
+            helper.AddUserToRole(id, newRole);
+            return RedirectToAction("ManageUser");
         }
 
         [Authorize(Roles = "Admin")]
@@ -107,6 +128,7 @@ namespace PersonalWebsite.Controllers
                 return HttpNotFound();
             }
             post.Comments = db.Comments.OrderByDescending(p => p.Created).ToList();
+            TempData["Keyword"] = null;
             return View(post);
         }
 
@@ -125,8 +147,10 @@ namespace PersonalWebsite.Controllers
 
         // GET: Posts/Create
         [Authorize(Roles="Admin")]
-        public ActionResult Create()
+        public ActionResult Create(UserRolesViewModel model, string newRole)
         {
+            helper.RemoveUserFromRole(model.user.Id, model.roleName);
+            helper.AddUserToRole(model.user.Id, newRole);
             return View();
         }
 
@@ -196,8 +220,8 @@ namespace PersonalWebsite.Controllers
 
                 db.Entry(post).Property(p => p.Body).IsModified = true;
                 db.Entry(post).Property(p => p.MediaURL).IsModified = true;
+
                 db.SaveChanges();
-                
             }
             return RedirectToAction("Details", new { slug = post.Slug });
         }

@@ -22,6 +22,7 @@ namespace PersonalWebsite.Controllers
             return View();
         }
         //GET
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -39,6 +40,7 @@ namespace PersonalWebsite.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Created,Id,Updated,AuthorId,Body,PostId")] Comment comment)
         {
             //If user didn't mess up
